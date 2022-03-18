@@ -12,6 +12,7 @@ const CustomInput = ({ value, setValue, placeholder, secureTextEntry }) => {
                 placeholder={placeholder}
                 style={styles.input}
                 secureTextEntry={secureTextEntry}
+                textAlignVertical="bottom" // Charz: for some reason keeping it aligned to the bottom makes it look as thugh it is in the center
             />
         </View>
     )
