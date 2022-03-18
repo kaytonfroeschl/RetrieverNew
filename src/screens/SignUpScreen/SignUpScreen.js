@@ -52,8 +52,10 @@ const SignUpScreen = () => {
     // what happens when user presses "Register"
     const onRegisterPressed = () => {
         console.warn('Register pressed')
-        signUp();
-        //FRONT END: maybe a screen that says to go verify your email
+        // navigate to home screen
+        navigation.navigate('Home');
+
+        //TO FRONT END: maybe a screen that says to go verify your email
         
     }
 
