@@ -89,7 +89,7 @@ const ResetPasswordScreen = () => {
                     <CustomButton
                         text="Back to Sign In"
                         type='TERTIARY'
-                        onPress={handleSubmit(onSignInPressed)}
+                        onPress={(onSignInPressed)}
                     />
 
                 <Modal
