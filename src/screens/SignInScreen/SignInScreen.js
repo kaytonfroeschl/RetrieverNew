@@ -21,7 +21,7 @@ const SignInScreen = () => {
     //const [password, setPassword] = useState("");
 
     //Charz: Instead of using the useState hook, I am instead implementing useForm to handle the state
-    const {control, handleSubmit, errors} = useForm();
+    const {control, handleSubmit} = useForm();
     
     //const { user, signUp, signIn } = useAuth();
 
