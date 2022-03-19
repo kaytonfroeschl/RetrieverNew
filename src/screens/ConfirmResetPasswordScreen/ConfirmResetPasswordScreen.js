@@ -1,3 +1,5 @@
+//looks like this is an unnecessary screen
+
 /* eslint-disable prettier/prettier */
 import React, {useState} from 'react'
 import {View, Text, StyleSheet, ScrollView } from 'react-native'
