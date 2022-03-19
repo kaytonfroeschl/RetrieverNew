@@ -1,10 +1,11 @@
 /* eslint-disable prettier/prettier */
 import React, { useState} from 'react'
-import {View, Text, Image, StyleSheet, useWindowDimensions, ScrollView } from 'react-native'
+import {View, Text, Image, StyleSheet, useWindowDimensions, ScrollView, TextInput } from 'react-native'
 import Logo from '../../../assets/images/clipart4739493.png'
 import CustomInput from '../../components/CustomInput'
 import CustomButton from '../../components/CustomButton'
 import { useNavigation } from '@react-navigation/native'
+import {useForm, Controller} from 'react-hook-form'
 
 //import { useAuth } from '../../../providers/AuthProvider';
 import Parse from 'parse/react-native.js';
@@ -16,19 +17,20 @@ Parse.serverURL = 'https://parseapi.back4app.com/';
 
 // building the screen for signing in (essentially the first page new users see)
 const SignInScreen = () => {
-    //const [username, setUsername] = useState('')
-    //const [password, setPassword] = useState('')
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    //const [username, setUsername] = useState("");
+    //const [password, setPassword] = useState("");
+
+    //Charz: Instead of using the useState hook, I am instead implementing useForm to handle the state
+    const {control, handleSubmit, errors} = useForm();
+    
     //const { user, signUp, signIn } = useAuth();
 
     const {height} = useWindowDimensions()
     const navigation = useNavigation()
 
-
     function logIn(){
         var user = Parse.User.logIn(username, password).then(function(user){
-            console.log('User created successful with name: ' + user.get("username") + ' and email: ' + user.get("email"));
+            console.log('User created successfully with name: ' + user.get("username") + ' and email: ' + user.get("email"));
             navigation.navigate('Home');
         }).catch(function(error){
             console.log("Error: " + error.code + " " + error.message);
@@ -36,16 +38,15 @@ const SignInScreen = () => {
          });
     }
 
-
     // what happens when user presses "Sign In"
-    const onSignInPressed = async () => {
+    const onSignInPressed = data => {
         console.warn('Sign In pressed')
-        //console.log("Press sign in");
+        console.log(data)
         //validate username and password
         //backend call needed here (@kayton, @celia)
         //if success, navigate to home screen
 
-        logIn();
+        //logIn();
     }
 
     // what happens when user presses "Forgot Password"
@@ -95,28 +96,28 @@ const SignInScreen = () => {
                     resizeMode="contain" 
                 />
 
-                <Text 
-                    style={styles.headerText}                
-                    >
+                <Text style={styles.headerText}>
                         Retriever
                 </Text>
 
                 <CustomInput 
+                    name="username"
                     placeholder="Username" 
-                    value={username} //was username
-                    setValue={setUsername} //was setUsername
+                    control={control}
+                    rules={{required: "Username is required", minLength: {value: 3, message: "Username must be at least 3 characters"}}}
                 />
 
                 <CustomInput 
+                    name="password"
                     placeholder="Password"
-                    value={password} 
-                    setValue={setPassword} 
+                    control={control}
                     secureTextEntry={true}
+                    rules={{required: "Password is required", minLength: {value: 3, message: "Password must be at least 6 characters"}}}
                 />
 
                 <CustomButton
                     text="Sign In"
-                    onPress={onSignInPressed}
+                    onPress={handleSubmit(onSignInPressed)}
                 />
 
                 <CustomButton

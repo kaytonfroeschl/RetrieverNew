@@ -4,6 +4,10 @@ import {View, Text, StyleSheet, ScrollView, Alert } from 'react-native'
 import CustomInput from '../../components/CustomInput'
 import CustomButton from '../../components/CustomButton'
 import { useNavigation } from '@react-navigation/native'
+import { useForm } from 'react-hook-form'
+
+// Charz: email for regex is presented here, I had to google it
+const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
 import Parse from 'parse/react-native.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -11,10 +15,12 @@ Parse.initialize('XwnlQIY0f0GyOzt5DftAZEYLOy9YZmT26ZIktF94', 'L4fRRElgmLuKvanPen
 Parse.serverURL = 'https://parseapi.back4app.com/';
 
 const SignUpScreen = () => {
-    const [username, setUsername] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
+    //const [username, setUsername] = useState('')
+    //const [email, setEmail] = useState('')
+    //const [password, setPassword] = useState('')
+    //const [confirmPassword, setConfirmPassword] = useState('')
+    const {control, handleSubmit, watch} = useForm();
+    const pwd = watch('password');
 
     const navigation = useNavigation()
 
@@ -83,34 +89,50 @@ const SignUpScreen = () => {
                 </Text>
 
                 <CustomInput 
+                    name="username"
+                    control={control}
                     placeholder="Username" 
-                    value={username} 
-                    setValue={setUsername}
+                    rules={{
+                        required: 'Username is required',
+                        minLength: {value: 3, message: 'Username must be at least 3 characters'},
+                        maxLength: {value: 20, message: 'Username must be at most 20 characters'},
+                    }}
                 />
 
                 <CustomInput
+                    name="email"
+                    control={control}
                     placeholder="Email"
-                    value={email}
-                    setValue={setEmail}
+                    rules={{
+                        required: 'Please enter your email',
+                        pattern: {value: EMAIL_REGEX, messgae: 'Please enter a valid email'}}}
                 />
 
                 <CustomInput 
+                    name="password"
+                    control={control}
                     placeholder="Password"
-                    value={password} 
-                    setValue={setPassword} 
-                    secureTextEntry={true}
+                    rules={{
+                        required: 'Please enter your password',
+                        minLength: { value: 6, message: 'Password must be at least 6 characters' },
+                    }}
                 />
 
                 <CustomInput 
+                    name="confirmPassword"
+                    control={control}
                     placeholder="Confirm Password"
-                    value={confirmPassword} 
-                    setValue={setConfirmPassword} 
                     secureTextEntry={true}
+                    rules={{
+                        required: 'Please confirm your password',
+                        validate: value => value === pwd || 'Passwords do not match'
+                    }}
+
                 />
 
                 <CustomButton
                     text="Register"
-                    onPress={onRegisterPressed}
+                    onPress={handleSubmit(onRegisterPressed)}
                 />
 
                 <Text style={styles.text}>

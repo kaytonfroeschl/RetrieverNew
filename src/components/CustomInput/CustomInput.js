@@ -1,20 +1,32 @@
 import React from 'react'
 import { View, Text, TextInput, StyleSheet } from 'react-native'
+import { Controller } from 'react-hook-form'
 
 // these are like spaces where text can be inputted
 // so far, it's been used as the input for the username and password, as well as inputs in the subsequent startup pages
-const CustomInput = ({ value, setValue, placeholder, secureTextEntry }) => {
+const CustomInput = ({control, name, rules={}, placeholder, secureTextEntry }) => {
     return (
-        <View style={styles.container}>
-            <TextInput
-                value={value}
-                onChangeText={setValue}
-                placeholder={placeholder}
-                style={styles.input}
-                secureTextEntry={secureTextEntry}
-                textAlignVertical="bottom" // Charz: for some reason keeping it aligned to the bottom makes it look as thugh it is in the center
-            />
-        </View>
+        <Controller
+            control={control}
+            name = {name}
+            rules={rules}
+            render={({field: {value, onChange, onBlur}, fieldState: {error}}) => (
+                <>
+                    <View style={[styles.container]}>
+                        <TextInput 
+                            value={value}
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            placeholder={placeholder}
+                            style={styles.input}
+                            textAlignVertical="bottom" // Charz: somehow this aligns it to the center, I don't get it either
+                            secureTextEntry={secureTextEntry}
+                        />
+                    </View>
+                    {error && (<Text style={{color: 'white', alignSelf: 'stretch'}}>{error.message || 'Error'}</Text>)}
+                </>
+            )}
+        />
     )
 }
 
