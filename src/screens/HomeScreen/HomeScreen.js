@@ -7,8 +7,38 @@ import { Component } from "react/cjs/react.production.min";
 import CustomButton from '../../components/CustomButton'
 import SearchInput from '../../components/SearchInput/SearchInput'
 import { useNavigation } from '@react-navigation/native'
-
-// building the home screen
+import Setting from '../Setting/Setting';
+import 'react-native-gesture-handler';
+import { createDrawerNavigator, DrawerItem } from '@react-navigation/drawer';
+import {
+    DrawerContentScrollView,
+    DrawerItemList,
+} from '@react-navigation/drawer';
+import Logout from '../SignInScreen/SignInScreen';
+const Drawer = createDrawerNavigator()
+function CustomDrawerContent(props) {
+    return (
+        //Yuying: These for the User profile.
+        //Yuying: The user can upload self images here, and also check their account infos.
+        //Yuying: Still need some logic setup
+        <DrawerContentScrollView {...props}>
+            <DrawerItem
+                label="User Image"
+                onPress={() => alert("Change User Image here")}
+            />
+            <DrawerItem
+                label="User Name"
+            />
+            <DrawerItem
+                label="#123456"
+            />
+            <DrawerItem
+                label="More User Information"
+            />
+            <DrawerItemList {...props} />
+        </DrawerContentScrollView>
+    );
+}
 const HomeScreen = () => {
 
     const navigation = useNavigation()
@@ -27,100 +57,131 @@ const HomeScreen = () => {
         navigation.navigate('Chat Page')
     }
     const onFeedPressed = async () => {
-        console.warn('Feed pressed')
-        navigation.navigate('Feed')
+        console.warn('Refresh the feed page')
+        navigation.navigate('Home')
     }
-    const onProfilePressed = async () => {
-        console.warn('Profile pressed')
-        navigation.navigate('Profile')
+    const onPostPressed = async () => {
+        console.warn('Post pressed')
+        navigation.navigate('Post')
     }
+
+    const Home = () => {
+        return (
+            <View style={{ flex: 1 }}>
+                <View style={[styles.flex, styles.topStatus]}>
+                    <SearchInput
+                        placeholder="Brown Jacket"
+                    />
+                </View>
+                <View style={[styles.btn]}>
+                    <CustomButton
+                        text="Go"
+                        type="SEARCH"
+                        foregroundColor="#E7EAF4"
+                        onPress={onSearchPressed}
+                    />
+                </View>
+                <View style={{ flexDirection: "row", backgroundColor: '#E7EAF4' }}>
+                    <View style={[styles.btn00]}>
+                        <CustomButton
+                            text="FOUND"
+                            type="SECONDARY"
+                            backgroundColor='#436cc9'
+                            onPress={onFoundPressed}
+                        />
+                    </View>
+                    <View style={[styles.btn00]}>
+                        <CustomButton
+                            text="LOST"
+                            type="SECONDARY"
+                            backgroundColor='#436cc9'
+                            onPress={onLostPressed}
+                        />
+                    </View >
+                </View>
+                <ScrollView>
+                    <View style={styles.root}>
+                        <Image
+                            source={Logo}
+                            style={styles.logo}
+                            resizeMode="contain"
+                        />
+                        <Text style={{ fontSize: 24, alignSelf: 'center' }}>Temp Post 1</Text>
+                        <Image
+                            source={Logo}
+                            style={styles.logo}
+                            resizeMode="contain"
+                        />
+                        <Text style={{ fontSize: 24, alignSelf: 'center' }}>Temp Post 2</Text>
+                        <Image
+                            source={Logo}
+                            style={styles.logo}
+                            resizeMode="contain"
+                        />
+                        <Text style={{ fontSize: 24, alignSelf: 'center' }}>Temp Post 3</Text>
+                        <Image
+                            source={Logo}
+                            style={styles.logo}
+                            resizeMode="contain"
+                        />
+                        <Text style={{ fontSize: 24, alignSelf: 'center' }}>Temp Post 4</Text>
+                    </View>
+
+                </ScrollView>
+                <View style={{ flexDirection: "row" }}>
+                    <View style={[styles.btn01]}>
+                        <CustomButton
+                            text="Feed"
+                            type="TERTIARY"
+                            onPress={onFeedPressed}//should refresh the page, still need logic setup
+                        />
+                    </View>
+                    <View style={[styles.btn01]}>
+                        <CustomButton
+                            text="Post"
+                            type="PRIMARY"
+                            onPress={onPostPressed}
+                        />
+                    </View>
+                    <View style={[styles.btn01]}>
+                        <CustomButton
+                            text="Chat"
+                            type="TERTIARY"
+                            onPress={onChatPressed}
+                        />
+                    </View >
+                </View>
+
+            </View >);
+    }
+
     return (
-        <View style={{ flex: 1 }}>
-            <View style={[styles.flex, styles.topStatus]}>
-                <SearchInput
-                    placeholder="Brown Jacket"
-                />
-            </View>
-            <View style={[styles.btn]}>
-                <CustomButton
-                    text="Go"
-                    type="SEARCH"
-                    foregroundColor="#E7EAF4"
-                    onPress={onSearchPressed}
-                />
-            </View>
-            <View style={{ flexDirection: "row", backgroundColor: '#E7EAF4' }}>
-                <View style={[styles.btn00]}>
-                    <CustomButton
-                        text="FOUND"
-                        type="SECONDARY"
-                        backgroundColor='#436cc9'
-                        onPress={onFoundPressed}
-                    />
-                </View>
-                <View style={[styles.btn00]}>
-                    <CustomButton
-                        text="LOST"
-                        type="SECONDARY"
-                        backgroundColor='#436cc9'
-                        onPress={onLostPressed}
-                    />
-                </View >
-            </View>
-            <ScrollView>
-                <View style={styles.root}>
-                    <Image
-                        source={Logo}
-                        style={styles.logo}
-                        resizeMode="contain"
-                    />
-                    <Text style={{ fontSize: 24, alignSelf: 'center' }}>Temp Post 1</Text>
-                    <Image
-                        source={Logo}
-                        style={styles.logo}
-                        resizeMode="contain"
-                    />
-                    <Text style={{ fontSize: 24, alignSelf: 'center' }}>Temp Post 2</Text>
-                    <Image
-                        source={Logo}
-                        style={styles.logo}
-                        resizeMode="contain"
-                    />
-                    <Text style={{ fontSize: 24, alignSelf: 'center' }}>Temp Post 3</Text>
-                    <Image
-                        source={Logo}
-                        style={styles.logo}
-                        resizeMode="contain"
-                    />
-                    <Text style={{ fontSize: 24, alignSelf: 'center' }}>Temp Post 4</Text>
-                </View>
+        //Yuying: These are the side menu navigate to the App setting and Logout
+        //Yuying：The problem with logout is the user will no longer need password to login in
+        //        after logout using the side menu tab.
+        //        Still need some logic setup.
+        <Drawer.Navigator
+            drawerContent={(props) => <CustomDrawerContent {...props} />}
+            headerShown={false}
+            screenOptions={{
+                drawerStyle: {
+                    backgroundColor: '#E7EAF4',
+                    width: 270,
+                }
 
-            </ScrollView>
-            <View style={{ flexDirection: "row" }}>
-                <View style={[styles.btn01]}>
-                    <CustomButton
-                        text="Feed"
-                        type="TERTIARY"
-                        onPress={onFeedPressed}//should refresh the page, still need logic setup
-                    />
-                </View>
-                <View style={[styles.btn01]}>
-                    <CustomButton
-                        text="Chat"
-                        type="PRIMARY"
-                        onPress={onChatPressed}
-                    />
-                </View>
-                <View style={[styles.btn01]}>
-                    <CustomButton
-                        text="Profile"
-                        type="TERTIARY"
-                        onPress={onProfilePressed}
-                    />
-                </View >
-            </View>
+            }}
+        >
 
-        </View >
+            <Drawer.Screen
+                name="Home" component={Home}
+            />
+            <Drawer.Screen
+                name="Settings" component={Setting}
+            />
+            <Drawer.Screen
+                name="Logout" component={Logout}
+            />
+        </Drawer.Navigator>
     );
 }
 
@@ -139,7 +200,7 @@ const styles = StyleSheet.create({
     },
     topStatus:
     {
-        marginTop: 60,
+        marginTop: 0,
         width: 350,
     },
     btn: {

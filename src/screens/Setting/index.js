@@ -1,2 +1,2 @@
 // this bit of code lets us import the custom buttons into other pages by calling the HomeScreen component
-export { default } from './Feed';
+export { default } from './Setting';

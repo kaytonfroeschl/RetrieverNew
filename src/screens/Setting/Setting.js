@@ -6,11 +6,11 @@ import SearchButton from '../../components/CustomButton'
 import CustomInput from '../../components/CustomInput'
 
 // building the home screen
-const Profile = () => {
+const Setting = () => {
     return (
         <ScrollView>
             <View style={styles.root}>
-                <Text style={{ fontSize: 30, alignSelf: 'center' }}>This is the Profile Page</Text>
+                <Text style={{ fontSize: 30, alignSelf: 'center' }}>This is the Setting Page</Text>
             </View>
         </ScrollView>
     );
@@ -26,4 +26,4 @@ const styles = StyleSheet.create({
 })
 
 // exporting the home screen to be used in the app (so it can be used in other screens)
-export default Profile;
+export default Setting;
