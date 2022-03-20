@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
-import React, {useState} from 'react'
-import {View, Text, StyleSheet, ScrollView, Alert } from 'react-native'
+import React, { useState } from 'react'
+import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native'
 import CustomInput from '../../components/CustomInput'
 import CustomButton from '../../components/CustomButton'
 import { useNavigation } from '@react-navigation/native'
@@ -19,24 +19,24 @@ const SignUpScreen = () => {
     //const [email, setEmail] = useState('')
     //const [password, setPassword] = useState('')
     //const [confirmPassword, setConfirmPassword] = useState('')
-    const {control, handleSubmit, watch} = useForm();
+    const { control, handleSubmit, watch } = useForm();
     const pwd = watch('password');
 
     const navigation = useNavigation()
 
 
 
-    async function signUp(){
+    async function signUp() {
         var user = new Parse.User();
         var result = password.localeCompare(confirmPassword);
-        if (result === 0){
+        if (result === 0) {
             user.set("username", username);
             user.set("email", email);
             user.set("password", password);
-            user.signUp().then(function(user) {
+            user.signUp().then(function (user) {
                 console.log('User created successful with name: ' + user.get("username") + ' and email: ' + user.get("email"));
                 navigation.navigate('Home')
-            }).catch(function(error){
+            }).catch(function (error) {
                 console.log("Error: " + error.code + " " + error.message);
                 navigation.navigate('Sign In')
             });
@@ -45,13 +45,13 @@ const SignUpScreen = () => {
             navigation.navigate('Sign In')
         }
     }
-        
-    
+
+
 
     // what happens when user presses "Sign In"
     const onSignInPressed = () => {
         console.warn('Sign In pressed')
-        
+
         navigation.navigate('Sign In');
     }
 
@@ -62,7 +62,7 @@ const SignUpScreen = () => {
         navigation.navigate('Home');
 
         //TO FRONT END: maybe a screen that says to go verify your email
-        
+
     }
 
     // what happens when user presses "Terms of Use"
@@ -85,17 +85,17 @@ const SignUpScreen = () => {
             <View style={styles.root}>
 
                 <Text style={styles.headerText}>
-                        Create an account
+                    Create an account
                 </Text>
 
-                <CustomInput 
+                <CustomInput
                     name="username"
                     control={control}
-                    placeholder="Username" 
+                    placeholder="Username"
                     rules={{
                         required: 'Username is required',
-                        minLength: {value: 3, message: 'Username must be at least 3 characters'},
-                        maxLength: {value: 20, message: 'Username must be at most 20 characters'},
+                        minLength: { value: 3, message: 'Username must be at least 3 characters' },
+                        maxLength: { value: 20, message: 'Username must be at most 20 characters' },
                     }}
                 />
 
@@ -105,10 +105,11 @@ const SignUpScreen = () => {
                     placeholder="Email"
                     rules={{
                         required: 'Please enter your email',
-                        pattern: {value: EMAIL_REGEX, messgae: 'Please enter a valid email'}}}
+                        pattern: { value: EMAIL_REGEX, messgae: 'Please enter a valid email' }
+                    }}
                 />
 
-                <CustomInput 
+                <CustomInput
                     name="password"
                     control={control}
                     placeholder="Password"
@@ -118,7 +119,7 @@ const SignUpScreen = () => {
                     }}
                 />
 
-                <CustomInput 
+                <CustomInput
                     name="confirmPassword"
                     control={control}
                     placeholder="Confirm Password"
@@ -136,17 +137,17 @@ const SignUpScreen = () => {
                 />
 
                 <Text style={styles.text}>
-                    By registering, you confirm that you accept our <Text style={styles.linkedText} onPress={onTermOfUSePressed}>Terms of Use </Text> 
+                    By registering, you confirm that you accept our <Text style={styles.linkedText} onPress={onTermOfUSePressed}>Terms of Use </Text>
                     and <Text style={styles.linkedText} onPress={onPrivacyPolicyPressed}>Privacy Policy</Text>.
                 </Text>
 
                 <Text style={styles.SignInText}>
                     Already have an account? <Text style={styles.linkedText} onPress={onSignInPressed}>Sign In</Text>
                 </Text>
-                
+
             </View>
         </ScrollView>
-    ) 
+    )
 }
 
 // making the page look pretty
@@ -154,7 +155,7 @@ const styles = StyleSheet.create({
     root: {
         alignItems: 'center',
         padding: 40,
-    },  
+    },
 
     headerText: {
         fontSize: 30,

@@ -14,7 +14,10 @@ import EmailConfirmationScreen from '../screens/EmailConfirmationScreen/EmailCon
 import ResetPasswordScreen from '../screens/ResetPasswordScreen';
 import ConfirmResetPasswordScreen from '../screens/ConfirmResetPasswordScreen';
 import HomeScreen from '../screens/HomeScreen';
-
+import SearchResult from '../screens/SearchResult/SearchResult';
+import Chat from '../screens/ChatPage/Chat';
+import Feeds from '../screens/FeedPage/Feed';
+import Profiles from '../screens/Profile/Profile';
 // Charz: this bit of code I had to look up to get the theme to work
 // Charz: essentially just defined the background color of the app to be that signature dark blue color
 const MyTheme = {
@@ -41,7 +44,10 @@ const Navigation = () => {
                 <Stack.Screen name="Reset Password" component={ResetPasswordScreen} />
                 <Stack.Screen name="Confirm Reset Password" component={ConfirmResetPasswordScreen} />
                 <Stack.Screen name="Home" component={HomeScreen} />
-
+                <Stack.Screen name="Search Result" component={SearchResult} />
+                <Stack.Screen name="Chat Page" component={Chat} />
+                <Stack.Screen name="Feed" component={Feeds} />
+                <Stack.Screen name="Profile" component={Profiles} />
             </Stack.Navigator>
         </NavigationContainer>
     );
