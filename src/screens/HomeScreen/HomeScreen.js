@@ -81,7 +81,7 @@ const HomeScreen = () => {
                         onPress={onSearchPressed}
                     />
                 </View>
-                <View style={{ flexDirection: "row", backgroundColor: '#E7EAF4' }}>
+                <View style={{flexDirection: "row", backgroundColor: '#E7EAF4', justifyContent: 'center' }}>
                     <View style={[styles.btn00]}>
                         <CustomButton
                             text="FOUND"
@@ -128,7 +128,7 @@ const HomeScreen = () => {
                     </View>
 
                 </ScrollView>
-                <View style={{ flexDirection: "row" }}>
+                <View style={{ flexDirection: "row",justifyContent: 'center' }}>
                     <View style={[styles.btn01]}>
                         <CustomButton
                             text="Feed"
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
     btn00: {
         width: 128,
         marginRight: 50,
-        marginLeft: 40,
+        marginLeft: 50,
         height: -100,
     },
     btn01: {
