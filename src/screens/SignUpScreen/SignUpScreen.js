@@ -1,9 +1,13 @@
 /* eslint-disable prettier/prettier */
-import React, {useState} from 'react'
-import {View, Text, StyleSheet, ScrollView, Alert } from 'react-native'
+import React, { useState } from 'react'
+import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native'
 import CustomInput from '../../components/CustomInput'
 import CustomButton from '../../components/CustomButton'
 import { useNavigation } from '@react-navigation/native'
+import { useForm } from 'react-hook-form'
+
+// Charz: email for regex is presented here, I had to google it
+const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
 import Parse from 'parse/react-native.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -11,26 +15,28 @@ Parse.initialize('XwnlQIY0f0GyOzt5DftAZEYLOy9YZmT26ZIktF94', 'L4fRRElgmLuKvanPen
 Parse.serverURL = 'https://parseapi.back4app.com/';
 
 const SignUpScreen = () => {
-    const [username, setUsername] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
+    //const [username, setUsername] = useState('')
+    //const [email, setEmail] = useState('')
+    //const [password, setPassword] = useState('')
+    //const [confirmPassword, setConfirmPassword] = useState('')
+    const { control, handleSubmit, watch } = useForm();
+    const pwd = watch('password');
 
     const navigation = useNavigation()
 
 
 
-    async function signUp(){
+    async function signUp() {
         var user = new Parse.User();
         var result = password.localeCompare(confirmPassword);
-        if (result === 0){
+        if (result === 0) {
             user.set("username", username);
             user.set("email", email);
             user.set("password", password);
-            user.signUp().then(function(user) {
+            user.signUp().then(function (user) {
                 console.log('User created successful with name: ' + user.get("username") + ' and email: ' + user.get("email"));
                 navigation.navigate('Home')
-            }).catch(function(error){
+            }).catch(function (error) {
                 console.log("Error: " + error.code + " " + error.message);
                 navigation.navigate('Sign In')
             });
@@ -39,22 +45,24 @@ const SignUpScreen = () => {
             navigation.navigate('Sign In')
         }
     }
-        
-    
+
+
 
     // what happens when user presses "Sign In"
     const onSignInPressed = () => {
         console.warn('Sign In pressed')
-        
+
         navigation.navigate('Sign In');
     }
 
     // what happens when user presses "Register"
     const onRegisterPressed = () => {
         console.warn('Register pressed')
-        signUp();
-        //FRONT END: maybe a screen that says to go verify your email
-        
+        // navigate to home screen
+        navigation.navigate('Home');
+
+        //TO FRONT END: maybe a screen that says to go verify your email
+
     }
 
     // what happens when user presses "Terms of Use"
@@ -77,52 +85,69 @@ const SignUpScreen = () => {
             <View style={styles.root}>
 
                 <Text style={styles.headerText}>
-                        Create an account
+                    Create an account
                 </Text>
 
-                <CustomInput 
-                    placeholder="Username" 
-                    value={username} 
-                    setValue={setUsername}
+                <CustomInput
+                    name="username"
+                    control={control}
+                    placeholder="Username"
+                    rules={{
+                        required: 'Username is required',
+                        minLength: { value: 3, message: 'Username must be at least 3 characters' },
+                        maxLength: { value: 20, message: 'Username must be at most 20 characters' },
+                    }}
                 />
 
                 <CustomInput
+                    name="email"
+                    control={control}
                     placeholder="Email"
-                    value={email}
-                    setValue={setEmail}
+                    rules={{
+                        required: 'Please enter your email',
+                        pattern: { value: EMAIL_REGEX, messgae: 'Please enter a valid email' }
+                    }}
                 />
 
-                <CustomInput 
+                <CustomInput
+                    name="password"
+                    control={control}
                     placeholder="Password"
-                    value={password} 
-                    setValue={setPassword} 
-                    secureTextEntry={true}
+                    rules={{
+                        required: 'Please enter your password',
+                        minLength: { value: 6, message: 'Password must be at least 6 characters' },
+                    }}
                 />
 
-                <CustomInput 
+                <CustomInput
+                    name="confirmPassword"
+                    control={control}
                     placeholder="Confirm Password"
-                    value={confirmPassword} 
-                    setValue={setConfirmPassword} 
                     secureTextEntry={true}
+                    rules={{
+                        required: 'Please confirm your password',
+                        validate: value => value === pwd || 'Passwords do not match'
+                    }}
+
                 />
 
                 <CustomButton
                     text="Register"
-                    onPress={onRegisterPressed}
+                    onPress={handleSubmit(onRegisterPressed)}
                 />
 
                 <Text style={styles.text}>
-                    By registering, you confirm that you accept our <Text style={styles.linkedText} onPress={onTermOfUSePressed}>Terms of Use </Text> 
+                    By registering, you confirm that you accept our <Text style={styles.linkedText} onPress={onTermOfUSePressed}>Terms of Use </Text>
                     and <Text style={styles.linkedText} onPress={onPrivacyPolicyPressed}>Privacy Policy</Text>.
                 </Text>
 
                 <Text style={styles.SignInText}>
                     Already have an account? <Text style={styles.linkedText} onPress={onSignInPressed}>Sign In</Text>
                 </Text>
-                
+
             </View>
         </ScrollView>
-    ) 
+    )
 }
 
 // making the page look pretty
@@ -130,7 +155,7 @@ const styles = StyleSheet.create({
     root: {
         alignItems: 'center',
         padding: 40,
-    },  
+    },
 
     headerText: {
         fontSize: 30,

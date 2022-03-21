@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Text, StyleSheet, Pressable } from 'react-native'
+import { View, Text, StyleSheet, Pressable } from 'react-native'
 
 // setting up the buttons used in the login page as well as several subsequent pages
 // the buttons are defined as pressable so that they can be pressed
@@ -7,32 +7,32 @@ import {View, Text, StyleSheet, Pressable } from 'react-native'
 
 
 // pretty much defining that we're making a button, and explaining what it does and how it looks
-const CustomButton = ({onPress, text, type = "PRIMARY", backgroundColor, foregroundColor}) => {
+const CustomButton = ({ onPress, text, type = "PRIMARY", backgroundColor, foregroundColor }) => {
     return (
-        <Pressable 
-            onPress={onPress} 
+        <Pressable
+            onPress={onPress}
             style={[
-                styles.container, 
+                styles.container,
                 styles[`container_${type}`],
-                backgroundColor ? {backgroundColor: backgroundColor} : {},
+                backgroundColor ? { backgroundColor: backgroundColor } : {},
             ]}>
-            <Text 
+            <Text
                 style={[
-                    styles.text, 
+                    styles.text,
                     styles[`text_${type}`],
-                    foregroundColor ? {color: foregroundColor} : {},
+                    foregroundColor ? { color: foregroundColor } : {},
                 ]}>
-                    {text}
-                </Text>
+                {text}
+            </Text>
         </Pressable>
-    ) 
+    )
 }
 
 // creating the styles for the buttons (how they look)
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        padding: 15,
+        padding: 10,
         marginVertical: 10,
 
         alignItems: 'center',
@@ -52,13 +52,21 @@ const styles = StyleSheet.create({
 
     },
 
+    container_SEARCH: {
+        borderColor: 'white',
+        backgroundColor: '#F3A747',
+        borderWidth: 2,
+        width: 55,
+        height: 40,
+        marginLeft: -5,
+        marginRight: 10,
+    },
+
     text: {
         fontWeight: 'bold',
     },
-
     text_PRIMARY: {
         color: 'white',
-        
     },
 
     text_SECONDARY: {
