@@ -36,6 +36,98 @@ const SignInScreen = () => {
          });
     }
 
+    const logInFacebook = async function () {
+        try {
+          // Login using the Facebook login dialog asking form email permission
+          return await LoginManager.logInWithPermissions(['email']).then(
+            (loginResult) => {
+              if (loginResult.isCancelled) {
+                console.log('Login cancelled');
+                return false;
+              } else {
+                // Retrieve access token from FBSDK to be able to linkWith Parse
+                AccessToken.getCurrentAccessToken().then((data) => {
+                  const facebookAccessToken = data.accessToken;
+                  // Callback that will be called after FBSDK successfuly retrieves user email and id from FB
+                  const responseEmailCallback = async (
+                    error,
+                    emailResult,
+                  ) => {
+                    if (error) {
+                      console.log('Error fetching data: ' + error.toString());
+                    } else {
+                      // Format authData to provide correctly for Facebook linkWith on Parse
+                      const facebookId = emailResult.id;
+                      const facebookEmail = emailResult.email;
+                      const authData = {
+                        id: facebookId,
+                        access_token: facebookAccessToken,
+                      };
+                      // Log in or sign up on Parse using this Facebook credentials
+                      let userToLogin = new Parse.User();
+                      // Set username and email to match provider email
+                      userToLogin.set('username', facebookEmail);
+                      userToLogin.set('email', facebookEmail);
+                      return await userToLogin
+                        .linkWith('facebook', {
+                          authData: authData,
+                        })
+                        .then(async (loggedInUser) => {
+                          // logIn returns the corresponding ParseUser object
+                          console.log(
+                            'Success!',
+                            `User ${loggedInUser.get(
+                              'username',
+                            )} has successfully signed in!`,
+                          );
+                          // To verify that this is in fact the current user, currentAsync can be used
+                          const currentUser = await Parse.User.currentAsync();
+                          console.log(loggedInUser === currentUser);
+                          // Navigation.navigate takes the user to the screen named after the one
+                          // passed as parameter
+                          navigation.navigate('Home');
+                          return true;
+                        })
+                        .catch(async (error) => {
+                          // Error can be caused by wrong parameters or lack of Internet connection
+                          console.log('Error!', error.message);
+                          return false;
+                        });
+                    }
+                  };
+      
+                  // Formats a FBSDK GraphRequest to retrieve user email and id
+                  const emailRequest = new GraphRequest(
+                    '/me',
+                    {
+                      accessToken: facebookAccessToken,
+                      parameters: {
+                        fields: {
+                          string: 'email',
+                        },
+                      },
+                    },
+                    responseEmailCallback,
+                  );
+      
+                  // Start the graph request, which will call the callback after finished
+                  new GraphRequestManager().addRequest(emailRequest).start();
+      
+                  return true;
+                });
+              }
+            },
+            (error) => {
+              console.log('Login fail with error: ' + error);
+              return false;
+            },
+          );
+        } catch (error) {
+          console.log('Error!', error.code);
+          return false;
+        }
+      };
+
 
     // what happens when user presses "Sign In"
     const onSignInPressed = async () => {
@@ -68,7 +160,7 @@ const SignInScreen = () => {
     const onSignInFacebookPressed = () => {
         console.warn('Sign In with Facebook pressed')
 
-        // need to set up logic here
+        logInFacebook();
     }
 
     // what happens when user presses "Sign In with Google"
