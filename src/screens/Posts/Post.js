@@ -5,6 +5,13 @@ import { Component } from "react/cjs/react.production.min";
 import SearchButton from '../../components/CustomButton'
 import CustomInput from '../../components/CustomInput'
 
+//import { useAuth } from '../../../providers/AuthProvider';
+import Parse from 'parse/react-native.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+Parse.initialize('XwnlQIY0f0GyOzt5DftAZEYLOy9YZmT26ZIktF94', 'L4fRRElgmLuKvanPenznzblgXwqDJGtxIKG0dB8j');
+Parse.serverURL = 'https://parseapi.back4app.com/';
+
+
 // building the home screen
 const Posts = () => {
     return (

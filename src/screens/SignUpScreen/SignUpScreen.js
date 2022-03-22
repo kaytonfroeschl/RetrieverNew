@@ -26,24 +26,19 @@ const SignUpScreen = () => {
 
 
 
-    async function signUp() {
+    async function signUp(usernameF, emailF, passwordF) {
         var user = new Parse.User();
-        var result = password.localeCompare(confirmPassword);
-        if (result === 0) {
-            user.set("username", username);
-            user.set("email", email);
-            user.set("password", password);
-            user.signUp().then(function (user) {
-                console.log('User created successful with name: ' + user.get("username") + ' and email: ' + user.get("email"));
-                navigation.navigate('Home')
-            }).catch(function (error) {
-                console.log("Error: " + error.code + " " + error.message);
-                navigation.navigate('Sign In')
-            });
-        }
-        else {
+        //var result = password.localeCompare(confirmPassword);
+        user.set("username", usernameF);
+        user.set("email", emailF);
+        user.set("password", passwordF);
+        user.signUp().then(function (user) {
+            console.log('User created successful with name: ' + user.get("username") + ' and email: ' + user.get("email"));
+            navigation.navigate('Home')
+        }).catch(function (error) {
+            console.log("Error: " + error.code + " " + error.message);
             navigation.navigate('Sign In')
-        }
+        });
     }
 
 
@@ -56,10 +51,11 @@ const SignUpScreen = () => {
     }
 
     // what happens when user presses "Register"
-    const onRegisterPressed = () => {
+    const onRegisterPressed = data => {
         console.warn('Register pressed')
         // navigate to home screen
-        navigation.navigate('Home');
+        signUp(data.username, data.email, data.password);
+        //navigation.navigate('Home');
 
         //TO FRONT END: maybe a screen that says to go verify your email
 

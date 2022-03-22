@@ -22,15 +22,14 @@ const SignInScreen = () => {
 
     //Charz: Instead of using the useState hook, I am instead implementing useForm to handle the state
     const {control, handleSubmit} = useForm();
-    
-    //const { user, signUp, signIn } = useAuth();
 
     const {height} = useWindowDimensions()
     const navigation = useNavigation()
 
-    function logIn(){
+    function logIn(username, password){
         var user = Parse.User.logIn(username, password).then(function(user){
             console.log('User created successfully with name: ' + user.get("username") + ' and email: ' + user.get("email"));
+            console.log("in?")
             navigation.navigate('Home');
         }).catch(function(error){
             console.log("Error: " + error.code + " " + error.message);
@@ -46,7 +45,7 @@ const SignInScreen = () => {
         //backend call needed here (@kayton, @celia)
         //if success, navigate to home screen
 
-        //logIn();
+        logIn(data.username, data.password);
     }
 
     // what happens when user presses "Forgot Password"

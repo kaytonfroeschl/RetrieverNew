@@ -26,13 +26,13 @@ const ResetPasswordScreen = () => {
 
     const navigation = useNavigation()
 
-    /*function resetPassword() {
-        Parse.User.requestPasswordReset(email).then(function() {
+    function resetPassword(emailF) {
+        Parse.User.requestPasswordReset(emailF).then(function() {
           console.log("Password reset request was sent successfully");
         }).catch(function(error) {
           console.log("The login failed with error: " + error.code + " " + error.message);
         });
-    }*/
+    }
 
     // what happens when user presses "Sign In"
     const onSignInPressed = () => {
@@ -42,8 +42,8 @@ const ResetPasswordScreen = () => {
     }
 
     // what happens when user presses "Send"
-    const onSendPressed = () => {
-        //resetPassword();
+    const onSendPressed = data => {
+        resetPassword(data.email);
         
         //FRONT END: SCREEN THAT SAYS GO CHECK YOUR EMAIL
         setModalVisible(true);
