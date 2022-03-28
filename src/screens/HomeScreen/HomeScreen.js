@@ -15,6 +15,7 @@ import {
     DrawerItemList,
 } from '@react-navigation/drawer';
 import Logout from '../SignInScreen/SignInScreen';
+
 const Drawer = createDrawerNavigator()
 function CustomDrawerContent(props) {
     return (
@@ -57,8 +58,8 @@ const HomeScreen = () => {
         navigation.navigate('Chat Page')
     }
     const onFeedPressed = async () => {
-       console.warn('Refresh the feed page')
-       navigation.navigate('Home')
+        console.warn('Refresh the feed page')
+        navigation.navigate('Home')
     }
     const onPostPressed = async () => {
         console.warn('Post pressed')
@@ -66,14 +67,14 @@ const HomeScreen = () => {
     }
     const wait = timeout => {
         return new Promise(resolve => setTimeout(resolve, timeout));
-      };
+    };
 
     const Home = () => {
-    const [refreshing, setRefreshing] = React.useState(false);
-    const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    wait(1000).then(() => setRefreshing(false));
-  }, []);
+        const [refreshing, setRefreshing] = React.useState(false);
+        const onRefresh = React.useCallback(() => {
+            setRefreshing(true);
+            wait(1000).then(() => setRefreshing(false));
+        }, []);
         return (
             <View style={{ flex: 1 }}>
                 <View style={[styles.flex, styles.topStatus]}>
@@ -89,7 +90,7 @@ const HomeScreen = () => {
                         onPress={onSearchPressed}
                     />
                 </View>
-                <View style={{flexDirection: "row", backgroundColor: '#E7EAF4', justifyContent: 'center' }}>
+                <View style={{ flexDirection: "row", backgroundColor: '#E7EAF4', justifyContent: 'center' }}>
                     <View style={[styles.btn00]}>
                         <CustomButton
                             text="FOUND"
@@ -108,7 +109,7 @@ const HomeScreen = () => {
                     </View >
                 </View>
                 <ScrollView contentContainerStyle={styles.scrollView}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                     <View style={styles.root}>
                         <Image
                             source={Logo}
@@ -137,13 +138,12 @@ const HomeScreen = () => {
                     </View>
 
                 </ScrollView>
-                <View style={{ flexDirection: "row",justifyContent: 'center' }}>
+                <View style={{ flexDirection: "row", justifyContent: 'center' }}>
                     <View style={[styles.btn01]}>
                         <CustomButton
                             text="Feed"
                             type="TERTIARY"
                             onPress={onFeedPressed}//should refresh the page, still need logic setup
-                           
                         />
                     </View>
                     <View style={[styles.btn01]}>
@@ -183,7 +183,7 @@ const HomeScreen = () => {
         >
 
             <Drawer.Screen
-                name="Home Page" component={Home}
+                name="Home" component={Home}
             />
             <Drawer.Screen
                 name="Settings" component={Setting}

@@ -5,11 +5,12 @@ import { Component } from "react/cjs/react.production.min";
 import SearchButton from '../../components/CustomButton'
 import CustomInput from '../../components/CustomInput'
 
-const ChatPage = () => {
+// building the home screen
+const ItemPage = () => {
     return (
         <ScrollView>
             <View style={styles.root}>
-                <Text style={{ fontSize: 30, alignSelf: 'center' }}>This is the Chat Page</Text>
+                <Text style={{ fontSize: 30, alignSelf: 'center' }}>Your Item Here</Text>
             </View>
         </ScrollView>
     );
@@ -25,4 +26,4 @@ const styles = StyleSheet.create({
 })
 
 // exporting the home screen to be used in the app (so it can be used in other screens)
-export default ChatPage;
+export default ItemPage;
