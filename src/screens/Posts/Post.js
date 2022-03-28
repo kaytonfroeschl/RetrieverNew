@@ -147,7 +147,7 @@ const Posts = () => {
           style={styles.btn01}
           onPress={onPostNowPressed}
         >
-          <Text style={{ color: 'white', fontSize: 18, marginTop: 15 }}>Post Now</Text>
+          <Text style={{ color: 'white', fontSize: 18, marginTop: 18 }}>Post Now</Text>
         </TouchableOpacity>
       </View>
 
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
   },
   btn02: {
     width: 310,
-    height: 30,
+    height: 40,
     borderRadius: 10,
     backgroundColor: '#5873AA',
     alignItems: "center",
