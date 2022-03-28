@@ -48,7 +48,7 @@ const Navigation = () => {
                 <Stack.Screen name="Search Result" component={SearchResult} />
                 <Stack.Screen name="Chat Page" component={Chat} />
                 <Stack.Screen name="Profile" component={Profiles} />
-                <Stack.Screen name="Post" component={Posts} />
+                <Stack.Screen name="Post" options={{title: 'Post', headerShown: true}} component={Posts} />
             </Stack.Navigator>
         </NavigationContainer>
     );
