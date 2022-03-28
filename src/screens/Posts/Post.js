@@ -168,10 +168,10 @@ const styles = StyleSheet.create({
   },
   position:
   {
-    marginLeft: 30,
+    marginLeft: 35,
     width: 350,
     alignSelf: 'center',
-    marginRight: 50,
+    marginRight: 35,
   },
   input: {
     margin: 15,
@@ -198,12 +198,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   btn02: {
-    width: 330,
-    height: 40,
+    width: 310,
+    height: 30,
     borderRadius: 10,
     backgroundColor: '#5873AA',
     alignItems: "center",
-  },
+  }
 
 })
 
