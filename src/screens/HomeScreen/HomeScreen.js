@@ -1,6 +1,6 @@
 // this is a temporary home screen lol 
 import React from "react";
-import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Image, RefreshControl } from "react-native";
 import Logo from '../../../assets/images/clipart4739493.png'
 import { TextInput } from "react-native-web";
 import { Component } from "react/cjs/react.production.min";
@@ -57,15 +57,23 @@ const HomeScreen = () => {
         navigation.navigate('Chat Page')
     }
     const onFeedPressed = async () => {
-        console.warn('Refresh the feed page')
-        navigation.navigate('Home')
+       console.warn('Refresh the feed page')
+       navigation.navigate('Home')
     }
     const onPostPressed = async () => {
         console.warn('Post pressed')
         navigation.navigate('Post')
     }
+    const wait = timeout => {
+        return new Promise(resolve => setTimeout(resolve, timeout));
+      };
 
     const Home = () => {
+    const [refreshing, setRefreshing] = React.useState(false);
+    const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(1000).then(() => setRefreshing(false));
+  }, []);
         return (
             <View style={{ flex: 1 }}>
                 <View style={[styles.flex, styles.topStatus]}>
@@ -99,7 +107,8 @@ const HomeScreen = () => {
                         />
                     </View >
                 </View>
-                <ScrollView>
+                <ScrollView contentContainerStyle={styles.scrollView}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                     <View style={styles.root}>
                         <Image
                             source={Logo}
@@ -134,6 +143,7 @@ const HomeScreen = () => {
                             text="Feed"
                             type="TERTIARY"
                             onPress={onFeedPressed}//should refresh the page, still need logic setup
+                           
                         />
                     </View>
                     <View style={[styles.btn01]}>
@@ -173,7 +183,7 @@ const HomeScreen = () => {
         >
 
             <Drawer.Screen
-                name="Home" component={Home}
+                name="Home Page" component={Home}
             />
             <Drawer.Screen
                 name="Settings" component={Setting}
