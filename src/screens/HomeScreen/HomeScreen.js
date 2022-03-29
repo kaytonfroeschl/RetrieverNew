@@ -1,6 +1,6 @@
 // this is a temporary home screen lol 
 import React from "react";
-import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Image, RefreshControl } from "react-native";
 import Logo from '../../../assets/images/clipart4739493.png'
 import { TextInput } from "react-native-web";
 import { Component } from "react/cjs/react.production.min";
@@ -15,6 +15,7 @@ import {
     DrawerItemList,
 } from '@react-navigation/drawer';
 import Logout from '../SignInScreen/SignInScreen';
+
 const Drawer = createDrawerNavigator()
 function CustomDrawerContent(props) {
     return (
@@ -64,8 +65,16 @@ const HomeScreen = () => {
         console.warn('Post pressed')
         navigation.navigate('Post')
     }
+    const wait = timeout => {
+        return new Promise(resolve => setTimeout(resolve, timeout));
+    };
 
     const Home = () => {
+        const [refreshing, setRefreshing] = React.useState(false);
+        const onRefresh = React.useCallback(() => {
+            setRefreshing(true);
+            wait(1000).then(() => setRefreshing(false));
+        }, []);
         return (
             <View style={{ flex: 1 }}>
                 <View style={[styles.flex, styles.topStatus]}>
@@ -81,7 +90,7 @@ const HomeScreen = () => {
                         onPress={onSearchPressed}
                     />
                 </View>
-                <View style={{flexDirection: "row", backgroundColor: '#E7EAF4', justifyContent: 'center' }}>
+                <View style={{ flexDirection: "row", backgroundColor: '#E7EAF4', justifyContent: 'center' }}>
                     <View style={[styles.btn00]}>
                         <CustomButton
                             text="FOUND"
@@ -99,7 +108,8 @@ const HomeScreen = () => {
                         />
                     </View >
                 </View>
-                <ScrollView>
+                <ScrollView contentContainerStyle={styles.scrollView}
+                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                     <View style={styles.root}>
                         <Image
                             source={Logo}
@@ -128,7 +138,7 @@ const HomeScreen = () => {
                     </View>
 
                 </ScrollView>
-                <View style={{ flexDirection: "row",justifyContent: 'center' }}>
+                <View style={{ flexDirection: "row", justifyContent: 'center' }}>
                     <View style={[styles.btn01]}>
                         <CustomButton
                             text="Feed"

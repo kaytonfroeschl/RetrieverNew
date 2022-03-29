@@ -18,6 +18,7 @@ import SearchResult from '../screens/SearchResult/SearchResult';
 import Chat from '../screens/ChatPage/Chat';
 import Profiles from '../screens/Setting/Setting';
 import Posts from '../screens/Posts/Post';
+import Items from '../screens/ItemPage/ItemPage';
 
 // Charz: this bit of code I had to look up to get the theme to work
 // Charz: essentially just defined the background color of the app to be that signature dark blue color
@@ -48,7 +49,8 @@ const Navigation = () => {
                 <Stack.Screen name="Search Result" component={SearchResult} />
                 <Stack.Screen name="Chat Page" component={Chat} />
                 <Stack.Screen name="Profile" component={Profiles} />
-                <Stack.Screen name="Post" component={Posts} />
+                <Stack.Screen name="Post" options={{ title: 'Post', headerShown: true }} component={Posts} />
+                <Stack.Screen name="Item" options={{ title: 'Item', headerShown: true }} component={Items} />
             </Stack.Navigator>
         </NavigationContainer>
     );

@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { useState} from 'react'
-import {View, Text, Image, StyleSheet, useWindowDimensions, ScrollView, TextInput } from 'react-native'
+import {View, Text, Image, StyleSheet, useWindowDimensions, ScrollView, TextInput, Alert } from 'react-native'
 import Logo from '../../../assets/images/clipart4739493.png'
 import CustomInput from '../../components/CustomInput'
 import CustomButton from '../../components/CustomButton'
@@ -33,6 +33,12 @@ const SignInScreen = () => {
             navigation.navigate('Home');
         }).catch(function(error){
             console.log("Error: " + error.code + " " + error.message);
+            Alert.alert('Error', 'Username or password is invalid.', [
+                {
+                  text: 'Cancel',
+                },
+                { text: 'OK'},
+              ]);
             //FRONT END: maybe add an error message saying either username or password was invalid
          });
     }
