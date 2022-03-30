@@ -6,23 +6,36 @@ import { Component } from "react";
 import { useNavigation } from '@react-navigation/native'
 import SearchInput from '../../components/SearchInput/SearchInput'
 //import { useAuth } from '../../../providers/AuthProvider';
-import Parse from 'parse/react-native.js';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
 import Logo from '../../../assets/images/clipart4739493.png'
 
+import Parse from 'parse/react-native.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 Parse.initialize('XwnlQIY0f0GyOzt5DftAZEYLOy9YZmT26ZIktF94', 'L4fRRElgmLuKvanPenznzblgXwqDJGtxIKG0dB8j');
 Parse.serverURL = 'https://parseapi.back4app.com/';
-te
 
 //Yuying: finished the very basic setup, the type slection drow down menu missed important logic set up
 //        ex: maybe can consider write a function, when the Picker.Value = 1, display the following menu for Picker 1.
 
 //Also missed the upload picture button. I do saw some tutorial online, it is shouldn't be a big problem.
 
+/*async function createNewItem(){
+    let newItem = new Parse.Object('Item');
+      
+}*/
+
 const Posts = () => {
+
+    const [current, setCurrent] = useState("test");
+    const [selectedValue, setSelectedValue] = useState('');
+    const [value, onChangeText] = React.useState('');
+
   const navigation = useNavigation()
-  const onPostNowPressed = async () => {
+
+  const onPostNowPressed = async data => {
+    console.log("lost or found: "+ current + " ");
+    console.log("selected Value: "+ selectedValue + " ");
+    console.log("value: "+ value + " ");
     console.warn('Post pressed')
     navigation.navigate('Item')
   }
@@ -43,9 +56,7 @@ const Posts = () => {
     }
   };
 
-  const [current, setCurrent] = useState("test");
-  const [selectedValue, setSelectedValue] = useState('');
-  const [value, onChangeText] = React.useState('');
+
 
   return (
     <ScrollView style={{ backgroundColor: '#E7EAF4' }}>
