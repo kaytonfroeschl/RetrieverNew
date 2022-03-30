@@ -14,17 +14,23 @@ import Logo from '../../../assets/images/clipart4739493.png'
 Parse.initialize('XwnlQIY0f0GyOzt5DftAZEYLOy9YZmT26ZIktF94', 'L4fRRElgmLuKvanPenznzblgXwqDJGtxIKG0dB8j');
 Parse.serverURL = 'https://parseapi.back4app.com/';
 
-
-//Yuying: finished the very basic setup, the type slection drow down menu missed important logic set up
-//        ex: maybe can consider write a function, when the Picker.Value = 1, display the following menu for Picker 1.
-
-//Also missed the upload picture button. I do saw some tutorial online, it is shouldn't be a big problem.
-
 const Posts = () => {
   const navigation = useNavigation()
-  const onPostNowPressed = async () => {
-    console.warn('Post pressed')
-    navigation.navigate('Item')
+  const onClothePressed = async () => {
+    console.warn('go to clothes options')
+    navigation.navigate('clothe')
+  }
+  const onShoesPressed = async () => {
+    console.warn('go to shoes options')
+    navigation.navigate('shoe')
+  }
+  const onPersonalPressed = async () => {
+    console.warn('go to personal item options')
+    navigation.navigate('personal')
+  }
+  const onElectronicsPressed = async () => {
+    console.warn('go to electronics options')
+    navigation.navigate('electronics')
   }
 
   const [image, setImage] = useState(null);
@@ -63,50 +69,21 @@ const Posts = () => {
         </RadioButtonGroup>
       </View>
 
-      <Text style={{ marginLeft: 30, marginTop: 30, fontWeight: 'bold', fontSize: 20 }}>Post Title:</Text>
+      <Text style={{ marginLeft: 30, marginTop: 20, fontWeight: 'bold', fontSize: 20 }}>Post Title:</Text>
       <View style={[styles.position]}>
         <SearchInput
           placeholder="Enter Post Title..."
         />
       </View>
 
-      <Text style={{ marginLeft: 30, marginTop: 30, fontWeight: 'bold', fontSize: 20 }}>Item Type Selction:</Text>
-      <View style={[styles.menu]}>
-        <Picker
-          selectedValue={selectedValue}
-          style={{ height: 45, width: 350 }}
-          onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-
-        >
-          <Picker.Item label="Jackets/Shoes" value="jacket/shone" itemIndex="1" />
-          <Picker.Item label="Personal Items" value="Personal" itemIndex="2" />
-          <Picker.Item label="Electronics" value="electro" itemIndex="3" />
-        </Picker>
-
-        <Picker
-          selectedValue={selectedValue}
-          style={{ height: 45, width: 350 }}
-          onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-
-        >
-          <Picker.Item label="Size 00" value="sel01" itemIndex="01" />
-          <Picker.Item label="Size 01" value="sel02" itemIndex="02" />
-          <Picker.Item label="Size 02" value="sel03" itemIndex="03" />
-        </Picker>
-
-        <Picker
-          selectedValue={selectedValue}
-          style={{ height: 45, width: 350 }}
-          onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-
-        >
-          <Picker.Item label="Brown" value="col01" itemIndex="001" />
-          <Picker.Item label="Black" value="col02" itemIndex="002" />
-          <Picker.Item label="Blue" value="col03" itemIndex="003" />
-        </Picker>
+      <Text style={{ marginLeft: 30, marginTop: 20, fontWeight: 'bold', fontSize: 20 }}>Location:</Text>
+      <View style={[styles.position]}>
+        <SearchInput
+          placeholder="Enter Your Location..."
+        />
       </View>
 
-      <Text style={{ marginLeft: 30, marginTop: 30, fontWeight: 'bold', fontSize: 20, marginBottom: 15 }}>More Details:</Text>
+      <Text style={{ marginLeft: 30, marginTop: 20, fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>More Details:</Text>
       <TextInput
         style={{ borderColor: 'transparent', marginLeft: 30, width: 350 }}
         onChangeText={text => onChangeText(text)}
@@ -127,7 +104,7 @@ const Posts = () => {
 
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
         <TouchableOpacity
-          style={[styles.btn02]}
+          style={[styles.btn03]}
           onPress={pickImage}
         >
           <Text style={{ color: 'white', fontSize: 17, marginTop: 8 }}>Pick one additional Image</Text>
@@ -135,19 +112,38 @@ const Posts = () => {
         {image && <Image source={{ uri: image }} style={{ width: 250, height: 200, marginTop: 10 }} />}
       </View>
 
-      <Text style={{ marginLeft: 30, marginTop: 20, fontWeight: 'bold', fontSize: 20 }}>Location</Text>
-      <View style={[styles.position]}>
-        <SearchInput
-          placeholder="Enter Your Location..."
-        />
-      </View>
 
-      <View style={{ flexDirection: "row", justifyContent: 'center' }}>
+      <Text style={{ marginLeft: 30, marginTop: 30, fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>Item Type Selctions:</Text>
+      <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
         <TouchableOpacity
-          style={styles.btn01}
-          onPress={onPostNowPressed}
+          style={styles.btn02}
+          onPress={onClothePressed}
         >
-          <Text style={{ color: 'white', fontSize: 18, marginTop: 18 }}>Post Now</Text>
+          <Text style={{ color: 'white', fontSize: 17, marginTop: 8 }}> Clothes</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
+        <TouchableOpacity
+          style={styles.btn02}
+          onPress={onShoesPressed}
+        >
+          <Text style={{ color: 'white', fontSize: 17, marginTop: 8 }}> Shoes</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
+        <TouchableOpacity
+          style={styles.btn02}
+          onPress={onPersonalPressed}
+        >
+          <Text style={{ color: 'white', fontSize: 17, marginTop: 8 }}> Personal Items</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 10, marginBottom: 30 }}>
+        <TouchableOpacity
+          style={styles.btn02}
+          onPress={onElectronicsPressed}
+        >
+          <Text style={{ color: 'white', fontSize: 17, marginTop: 8 }}> Electronics</Text>
         </TouchableOpacity>
       </View>
 
@@ -168,7 +164,7 @@ const styles = StyleSheet.create({
   },
   position:
   {
-    marginLeft: 35,
+    marginLeft: 20,
     width: 350,
     alignSelf: 'center',
     marginRight: 35,
@@ -188,20 +184,19 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     marginLeft: 30
   },
-  btn01: {
-    width: 180,
-    marginTop: 30,
-    height: 60,
-    marginBottom: 50,
-    borderRadius: 10,
-    backgroundColor: '#F3A747',
-    alignItems: "center",
-  },
   btn02: {
     width: 310,
     height: 40,
     borderRadius: 10,
     backgroundColor: '#5873AA',
+    alignItems: "center",
+  },
+
+  btn03: {
+    width: 310,
+    height: 40,
+    borderRadius: 10,
+    backgroundColor: '#6D94C7',
     alignItems: "center",
   }
 
