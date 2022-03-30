@@ -19,6 +19,10 @@ import Chat from '../screens/ChatPage/Chat';
 import Profiles from '../screens/Setting/Setting';
 import Posts from '../screens/Posts/Post';
 import Items from '../screens/ItemPage/ItemPage';
+import Clothes from '../screens/Posts/Clothes';
+import Shoes from '../screens/Posts/Shoes';
+import Personal from '../screens/Posts/Personal';
+import Electronics from '../screens/Posts/Electronics';
 
 // Charz: this bit of code I had to look up to get the theme to work
 // Charz: essentially just defined the background color of the app to be that signature dark blue color
@@ -51,6 +55,10 @@ const Navigation = () => {
                 <Stack.Screen name="Profile" component={Profiles} />
                 <Stack.Screen name="Post" options={{ title: 'Post', headerShown: true }} component={Posts} />
                 <Stack.Screen name="Item" options={{ title: 'Item', headerShown: true }} component={Items} />
+                <Stack.Screen name="clothe" options={{ title: 'Post for Clothes', headerShown: true }} component={Clothes} />
+                <Stack.Screen name="shoe" options={{ title: 'Post for Shoes', headerShown: true }} component={Shoes} />
+                <Stack.Screen name="personal" options={{ title: 'Post for Personal Items', headerShown: true }} component={Personal} />
+                <Stack.Screen name="electronics" options={{ title: 'Post for Electronics', headerShown: true }} component={Electronics} />
             </Stack.Navigator>
         </NavigationContainer>
     );
