@@ -16,9 +16,10 @@ import ConfirmResetPasswordScreen from '../screens/ConfirmResetPasswordScreen';
 import HomeScreen from '../screens/HomeScreen';
 import SearchResult from '../screens/SearchResult/SearchResult';
 import Chat from '../screens/ChatPage/Chat';
-import Profiles from '../screens/Setting/Setting';
+import Settings from '../screens/Setting/Setting';
 import Posts from '../screens/Posts/Post';
 import Items from '../screens/ItemPage/ItemPage';
+import Profiles from '../screens/Profiles';
 
 // Charz: this bit of code I had to look up to get the theme to work
 // Charz: essentially just defined the background color of the app to be that signature dark blue color
@@ -48,9 +49,10 @@ const Navigation = () => {
                 <Stack.Screen name="Home" component={HomeScreen} />
                 <Stack.Screen name="Search Result" component={SearchResult} />
                 <Stack.Screen name="Chat Page" component={Chat} />
-                <Stack.Screen name="Profile" component={Profiles} />
+                <Stack.Screen name="Profile" component={Profiles} options={{title: 'Profile', headerShown: true}} />
                 <Stack.Screen name="Post" options={{ title: 'Post', headerShown: true }} component={Posts} />
                 <Stack.Screen name="Item" options={{ title: 'Item', headerShown: true }} component={Items} />
+                <Stack.Screen name="Setting" component={Settings} />
             </Stack.Navigator>
         </NavigationContainer>
     );
