@@ -1,6 +1,6 @@
 // this is a temporary home screen lol 
 import React from "react";
-import { View, Text, StyleSheet, ScrollView, Image, RefreshControl, SafeAreaView, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Image, RefreshControl } from "react-native";
 import Logo from '../../../assets/images/clipart4739493.png'
 import { TextInput } from "react-native-web";
 import { Component } from "react/cjs/react.production.min";
@@ -15,22 +15,18 @@ import {
     DrawerItemList,
 } from '@react-navigation/drawer';
 import Logout from '../SignInScreen/SignInScreen';
-import Profiles from '../Profiles';
 
 const Drawer = createDrawerNavigator()
-
 function CustomDrawerContent(props) {
-    const navigation = useNavigation()
     return (
-        <SafeAreaView style={{flex:1}}>
-        <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-        <Image
-        source={Logo}
-        style={styles.icon}
-        label="profile image"
-        />
-        </TouchableOpacity>
+        //Yuying: These for the User profile.
+        //Yuying: The user can upload self images here, and also check their account infos.
+        //Yuying: Still need some logic setup
         <DrawerContentScrollView {...props}>
+            <DrawerItem
+                label="User Image"
+                onPress={() => alert("Change User Image here")}
+            />
             <DrawerItem
                 label="User Name"
             />
@@ -42,7 +38,6 @@ function CustomDrawerContent(props) {
             />
             <DrawerItemList {...props} />
         </DrawerContentScrollView>
-        </SafeAreaView>
     );
 }
 const HomeScreen = () => {
@@ -186,12 +181,9 @@ const HomeScreen = () => {
 
             }}
         >
-            
+
             <Drawer.Screen
-                name="Home Screen" component={Home}
-            />
-            <Drawer.Screen
-                name="Profile" component={Profiles}
+                name="Home" component={Home}
             />
             <Drawer.Screen
                 name="Settings" component={Setting}
@@ -243,14 +235,6 @@ const styles = StyleSheet.create({
         width: 200,
         height: 200,
     },
-    icon: {
-        resizeMode: 'center',
-        width: 110,
-        height: 110,
-        borderRadius: 100 / 2,
-        alignSelf: 'center',
-        },
-
 })
 
 // exporting the home screen to be used in the app (so it can be used in other screens)
