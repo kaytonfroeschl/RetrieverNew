@@ -47,11 +47,11 @@ const Posts = ()=> {
   }
   const onShoesPressed = async () => {
     console.warn('go to shoes options')
-    navigation.navigate('shoe', {action: current});
+    navigation.navigate('shoe', {action: current, currUser: currUserID});
   }
   const onPersonalPressed = async () => {
     console.warn('go to personal item options')
-    navigation.navigate('personal', {action: current});
+    navigation.navigate('personal', {action: current, currUser: currUserID});
   }
   const onElectronicsPressed = async () => {
     console.warn('go to electronics options')

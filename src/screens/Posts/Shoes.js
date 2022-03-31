@@ -13,10 +13,12 @@ import SearchInput from '../../components/SearchInput/SearchInput'
 //FRONTEND: shouldnt it say shoepage?
 const jacketPage = ({route}) => {
     const {action} = route.params;
+    const {currUser} = route.params;
     const navigation = useNavigation()
     const onPostNowPressed = async () => {
         console.warn('Post pressed')
-        navigation.navigate('Item')
+        let category = "Shoes";
+        navigation.navigate('Item', {action: action, currUser: currUser, category: category, clotheType: clotheType, color: color, size: size});
     }
     const [clotheType, setClotheType] = useState(" ");
     const [color, setColor] = useState(" ");

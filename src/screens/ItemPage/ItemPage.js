@@ -4,6 +4,8 @@ import { TextInput } from "react-native-web";
 import { Component } from "react/cjs/react.production.min";
 import SearchButton from '../../components/CustomButton'
 import CustomInput from '../../components/CustomInput'
+import LostItem from './LostItem'
+import FoundItem from './FoundItem'
 
 import Parse from 'parse/react-native.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -29,6 +31,8 @@ const ItemPage = ({route}) => {
     console.log(color);
     console.log(size);
 
+   
+
     function getLostOrFound(action){
         if(action === "Lost"){
             return false;
@@ -39,7 +43,7 @@ const ItemPage = ({route}) => {
     
     var globalItemID = " ";
 
-    /*ITEM DB */
+    /*ITEM DB*/
     async function createNewItem(userVar, actionVar, categoryP, clotheTypeP, colorP, sizeP){
         let newItem = new Parse.Object('Item');
         newItem.set('UserID', userVar);
@@ -49,10 +53,14 @@ const ItemPage = ({route}) => {
             await newItem.save();
             globalItemID = newItem.id;
             if(getLostOrFound(actionVar) === false){
-                //navigation.navigate('Lost', {globalItemID:globalItemID, category:category, clotheType:clotheType, color:color, size:size});
+                //Call Lost Class
+                var LostObj = new LostItem;
+                LostObj.createNewLost(globalItemID, categoryP, clotheTypeP, colorP, sizeP);
             }
             else{
-                //found page
+                //Call Found Class
+                var FoundObj = new FoundItem;
+                FoundObj.createNewFound(globalItemID, categoryP, clotheTypeP, colorP, sizeP);
             }
             
             //Sucess
@@ -64,31 +72,7 @@ const ItemPage = ({route}) => {
         };
     };
 
-/*
-    LOST DB
-    async function createNewLost(categoryP, globalItem){
-        console.log("enter into createNewLost")
-        let newLost = new Parse.Object('Lost');
-        //console.log("before set"+globalItemID)
-        newLost.set('itemID', globalItem);
-        newLost.set('Type', categoryP);
-        //newLost.set('DateLost', new Date());
-        try{
-            await newLost.save();
-            //Sucess
-            
-            console.log("Sucess! Lost item was created!")
-            console.log("globalItemID LOST:"+globalItemID)
-            globalLostID = newLost.id;
-            console.log("globalLostID LOST: "+globalLostID)
-            console.log("leaving createNewLost")
-            return true;
-        } catch(error){
-            Alert.alert('Error!', error.message);
-            return false;
-        };
-    };
-*/
+
 
     /* Creates new ITEM row in DB */
     createNewItem(currUser, action, category, clotheType, color, size);

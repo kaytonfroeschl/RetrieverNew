@@ -12,9 +12,11 @@ import SearchInput from '../../components/SearchInput/SearchInput'
 
 const Personal = ({route}) => {
     const {action} = route.params;
+    const {currUser} = route.params;
     const navigation = useNavigation()
     const onPostNowPressed = async () => {
         console.warn('Post pressed')
+        let category = "Personal";
         navigation.navigate('Item')
     }
     const [clotheType, setClotheType] = useState(" ");
