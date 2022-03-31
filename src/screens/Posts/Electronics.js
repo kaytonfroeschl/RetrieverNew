@@ -9,7 +9,8 @@ import { useNavigation } from '@react-navigation/native'
 import RadioButtonGroup, { RadioButtonItem } from "expo-radio-button";
 import SearchInput from '../../components/SearchInput/SearchInput'
 
-const Electronics = () => {
+const Electronics = ({route}) => {
+    const {action} = route.params;
     const navigation = useNavigation()
     const onPostNowPressed = async () => {
         console.warn('Post pressed')
@@ -18,6 +19,12 @@ const Electronics = () => {
     const [clotheType, setClotheType] = useState(" ");
     const [color, setColor] = useState(" ");
     const [size, setSize] = useState(" ");
+
+    console.log('Electronic options:')
+    console.log('Type: '+ clotheType);
+    console.log('Color: '+ color);
+    console.log('Size: '+ size);
+    console.log('Action: '+ action);
 
     return (
         <ScrollView style={{ backgroundColor: '#E7EAF4' }} >

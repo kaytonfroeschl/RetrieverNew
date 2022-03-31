@@ -10,7 +10,9 @@ import RadioButtonGroup, { RadioButtonItem } from "expo-radio-button";
 import SearchInput from '../../components/SearchInput/SearchInput'
 
 // building the home screen
-const jacketPage = () => {
+//FRONTEND: shouldnt it say shoepage?
+const jacketPage = ({route}) => {
+    const {action} = route.params;
     const navigation = useNavigation()
     const onPostNowPressed = async () => {
         console.warn('Post pressed')
@@ -19,6 +21,12 @@ const jacketPage = () => {
     const [clotheType, setClotheType] = useState(" ");
     const [color, setColor] = useState(" ");
     const [size, setSize] = useState(" ");
+
+    console.log('Shoe options:')
+    console.log('Shoe Type: '+ clotheType);
+    console.log('Color: '+ color);
+    console.log('Size: '+ size);
+    console.log('Action: '+ action);
 
     return (
         <ScrollView style={{ backgroundColor: '#E7EAF4' }} >

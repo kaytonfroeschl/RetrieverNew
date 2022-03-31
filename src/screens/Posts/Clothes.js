@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from "react-native";
-import { TextInput } from "react-native-web";
+import { Alert, TextInput } from "react-native-web";
 import { Component } from "react/cjs/react.production.min";
 import SearchButton from '../../components/CustomButton'
 import CustomInput from '../../components/CustomInput'
@@ -9,16 +9,38 @@ import { useNavigation } from '@react-navigation/native'
 import RadioButtonGroup, { RadioButtonItem } from "expo-radio-button";
 import SearchInput from '../../components/SearchInput/SearchInput'
 
+import Parse from 'parse/react-native.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+Parse.initialize('XwnlQIY0f0GyOzt5DftAZEYLOy9YZmT26ZIktF94', 'L4fRRElgmLuKvanPenznzblgXwqDJGtxIKG0dB8j');
+Parse.serverURL = 'https://parseapi.back4app.com/';
+
 // building the home screen
-const Clothes = () => {
+
+
+const Clothes = ({route}) => {
+    const {action} = route.params;
+    const {currUser} = route.params;
     const navigation = useNavigation()
+
     const onPostNowPressed = async () => {
         console.warn('Post pressed')
-        navigation.navigate('Item')
+
+        /* creating an ITEM row on backend */
+        let category = "Clothes";
+
+        navigation.navigate('Item', {action: action, currUser: currUser, category: category, clotheType: clotheType, color: color, size: size});
     }
+
+
     const [clotheType, setClotheType] = useState(" ");
     const [color, setColor] = useState(" ");
     const [size, setSize] = useState(" ");
+
+    console.log('Clothes options:')
+    console.log('Clothes Type: '+ clotheType);
+    console.log('Color: '+ color);
+    console.log('Size: '+ size);
+    console.log('Action: '+ action);
 
     return (
         <ScrollView style={{ backgroundColor: '#E7EAF4' }} >

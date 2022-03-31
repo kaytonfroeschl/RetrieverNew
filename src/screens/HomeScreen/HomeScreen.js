@@ -67,12 +67,12 @@ const HomeScreen = () => {
         console.warn('Show all Lost Items')
         console.log("Lost Items:")
         
-        //Query the Lost Items
+       /* //Query the Lost Items
         let parseQuery = new Parse.Query('Item');
         parseQuery.equalTo('Action', false);
         let queryResults = await parseQuery.findAll();
         //results of all lost items
-        console.log(queryResults);
+        console.log(queryResults);*/
     }
     const onChatPressed = async () => {
         console.warn('Chat pressed')

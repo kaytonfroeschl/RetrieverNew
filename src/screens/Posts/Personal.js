@@ -10,7 +10,8 @@ import RadioButtonGroup, { RadioButtonItem } from "expo-radio-button";
 import SearchInput from '../../components/SearchInput/SearchInput'
 
 
-const Personal = () => {
+const Personal = ({route}) => {
+    const {action} = route.params;
     const navigation = useNavigation()
     const onPostNowPressed = async () => {
         console.warn('Post pressed')
@@ -19,6 +20,12 @@ const Personal = () => {
     const [clotheType, setClotheType] = useState(" ");
     const [color, setColor] = useState(" ");
     const [size, setSize] = useState(" ");
+
+    console.log('Personal Items options:')
+    console.log('Type: '+ clotheType);
+    console.log('Color: '+ color);
+    console.log('Size: '+ size);
+    console.log('Action: '+ action);
 
     return (
         <ScrollView style={{ backgroundColor: '#E7EAF4' }} >

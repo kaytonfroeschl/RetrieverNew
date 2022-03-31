@@ -14,28 +14,48 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 Parse.initialize('XwnlQIY0f0GyOzt5DftAZEYLOy9YZmT26ZIktF94', 'L4fRRElgmLuKvanPenznzblgXwqDJGtxIKG0dB8j');
 Parse.serverURL = 'https://parseapi.back4app.com/';
 
-const Posts = () => {
+const Posts = ()=> {
 
-    const [current, setCurrent] = useState("test");
+    const [current, setCurrent] = useState("test"); //current = "Lost" or "Found" string 
     const [selectedValue, setSelectedValue] = useState('');
     const [value, onChangeText] = React.useState('');
 
+    //spits out the value or lost or found based off user input
+    //console.log('Lost or Found: ')
+    console.log(current);
+
+    const [currUserID, setCurrUserID] = useState('');
+
+    async function getCurrentUser() {
+      // This condition ensures that username is updated only if needed
+      if (currUserID === '') {
+        const currentUser = await Parse.User.currentAsync();
+        if (currentUser !== null) {
+          setCurrUserID(currentUser.id);
+        }
+      }
+    }
+    getCurrentUser();
+    console.log("Current User ID (FkH3HV4mtp): "+ currUserID);
+
+
   const navigation = useNavigation()
+
   const onClothePressed = async () => {
     console.warn('go to clothes options')
-    navigation.navigate('clothe')
+    navigation.navigate('clothe', {action: current, currUser: currUserID});
   }
   const onShoesPressed = async () => {
     console.warn('go to shoes options')
-    navigation.navigate('shoe')
+    navigation.navigate('shoe', {action: current});
   }
   const onPersonalPressed = async () => {
     console.warn('go to personal item options')
-    navigation.navigate('personal')
+    navigation.navigate('personal', {action: current});
   }
   const onElectronicsPressed = async () => {
     console.warn('go to electronics options')
-    navigation.navigate('electronics')
+    navigation.navigate('electronics', {action: current});
   }
 
   const [image, setImage] = useState(null);
