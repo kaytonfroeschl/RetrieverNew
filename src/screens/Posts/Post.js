@@ -14,48 +14,51 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 Parse.initialize('XwnlQIY0f0GyOzt5DftAZEYLOy9YZmT26ZIktF94', 'L4fRRElgmLuKvanPenznzblgXwqDJGtxIKG0dB8j');
 Parse.serverURL = 'https://parseapi.back4app.com/';
 
-const Posts = ()=> {
+const Posts = () => {
 
-    const [current, setCurrent] = useState("test"); //current = "Lost" or "Found" string 
-    const [selectedValue, setSelectedValue] = useState('');
-    const [value, onChangeText] = React.useState('');
+  const [current, setCurrent] = useState("test"); //current = "Lost" or "Found" string 
+  const [selectedValue, setSelectedValue] = useState('');
+  const [detailValue, onChangeText] = React.useState('');
+  const [title, setTitle] = useState('');
+  const [location, setLocation] = useState('');
+  //spits out the value or lost or found based off user input
+  //console.log('Lost or Found: ')
+  console.log(current);
+  console.log("Title: " + title);
+  console.log("Location: " + location);
+  console.log("Details: " + detailValue);
+  const [currUserID, setCurrUserID] = useState('');
 
-    //spits out the value or lost or found based off user input
-    //console.log('Lost or Found: ')
-    console.log(current);
-
-    const [currUserID, setCurrUserID] = useState('');
-
-    async function getCurrentUser() {
-      // This condition ensures that username is updated only if needed
-      if (currUserID === '') {
-        const currentUser = await Parse.User.currentAsync();
-        if (currentUser !== null) {
-          setCurrUserID(currentUser.id);
-        }
+  async function getCurrentUser() {
+    // This condition ensures that username is updated only if needed
+    if (currUserID === '') {
+      const currentUser = await Parse.User.currentAsync();
+      if (currentUser !== null) {
+        setCurrUserID(currentUser.id);
       }
     }
-    getCurrentUser();
-    console.log("Current User ID (FkH3HV4mtp): "+ currUserID);
+  }
+  getCurrentUser();
+  console.log("Current User ID (FkH3HV4mtp): " + currUserID);
 
 
   const navigation = useNavigation()
 
   const onClothePressed = async () => {
     console.warn('go to clothes options')
-    navigation.navigate('clothe', {action: current, currUser: currUserID});
+    navigation.navigate('clothe', { action: current, currUser: currUserID });
   }
   const onShoesPressed = async () => {
     console.warn('go to shoes options')
-    navigation.navigate('shoe', {action: current, currUser: currUserID});
+    navigation.navigate('shoe', { action: current, currUser: currUserID });
   }
   const onPersonalPressed = async () => {
     console.warn('go to personal item options')
-    navigation.navigate('personal', {action: current, currUser: currUserID});
+    navigation.navigate('personal', { action: current, currUser: currUserID });
   }
   const onElectronicsPressed = async () => {
     console.warn('go to electronics options')
-    navigation.navigate('electronics', {action: current});
+    navigation.navigate('electronics', { action: current });
   }
 
   const [image, setImage] = useState(null);
@@ -95,7 +98,9 @@ const Posts = ()=> {
       <Text style={{ marginLeft: 30, marginTop: 20, fontWeight: 'bold', fontSize: 20 }}>Post Title:</Text>
       <View style={[styles.position]}>
         <SearchInput
-          placeholder="Enter Post Title..."
+          placeholder="Enter Post Title ..."
+          value={title}
+          setValue={setTitle}
         />
       </View>
 
@@ -103,6 +108,8 @@ const Posts = ()=> {
       <View style={[styles.position]}>
         <SearchInput
           placeholder="Enter Your Location..."
+          value={location}
+          setValue={setLocation}
         />
       </View>
 
@@ -122,7 +129,7 @@ const Posts = ()=> {
         textAlignVertical="top"
         fontSize={17}
         returnKeyType="done"
-        value={value}
+        value={detailValue}
       />
 
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
@@ -225,5 +232,4 @@ const styles = StyleSheet.create({
 
 })
 
-// exporting the home screen to be used in the app (so it can be used in other screens)
 export default Posts;

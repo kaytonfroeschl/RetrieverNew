@@ -14,12 +14,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 Parse.initialize('XwnlQIY0f0GyOzt5DftAZEYLOy9YZmT26ZIktF94', 'L4fRRElgmLuKvanPenznzblgXwqDJGtxIKG0dB8j');
 Parse.serverURL = 'https://parseapi.back4app.com/';
 
-// building the home screen
-
-
-const Clothes = ({route}) => {
-    const {action} = route.params;
-    const {currUser} = route.params;
+/* Yuying: I don't know if we need different value to handle the custom color input,
+               So I comment the code I write about the custom color. 
+               Set them free if you think needed.  
+    */
+const Clothes = ({ route }) => {
+    const { action } = route.params;
+    const { currUser } = route.params;
     const navigation = useNavigation()
 
     const onPostNowPressed = async () => {
@@ -28,22 +29,26 @@ const Clothes = ({route}) => {
         /* creating an ITEM row on backend */
         let category = "Clothes";
 
-        navigation.navigate('Item', {action: action, currUser: currUser, category: category, clotheType: clotheType, color: color, size: size});
+        navigation.navigate('Item', { action: action, currUser: currUser, category: category, clotheType: clotheType, color: color, size: size });
     }
 
     /* FRONT-END!
         Need variable for the value of brand
     */
-
+    //Added
     const [clotheType, setClotheType] = useState(" ");
     const [color, setColor] = useState(" ");
     const [size, setSize] = useState(" ");
+    const [brand, setBrand] = useState(" ");
+    //const [customColor, setCustomColor] = useState("");
 
     console.log('Clothes options:')
-    console.log('Clothes Type: '+ clotheType);
-    console.log('Color: '+ color);
-    console.log('Size: '+ size);
-    console.log('Action: '+ action);
+    console.log('Clothes Type: ' + clotheType);
+    console.log('Color: ' + color);
+    console.log('Size: ' + size);
+    console.log('Brand: ' + brand);
+    //console.log('Custom Color:' + customColor);
+    console.log('Action: ' + action);
 
     return (
         <ScrollView style={{ backgroundColor: '#E7EAF4' }} >
@@ -131,6 +136,8 @@ const Clothes = ({route}) => {
                 <SearchInput
                     name="ColorInput"
                     placeholder="Enter custom color"
+                //value={customColor}
+                //setValue={setCustomColor}
                 />
             </View>
             <View style={{ flexDirection: 'row', marginTop: 20 }}>
@@ -142,6 +149,8 @@ const Clothes = ({route}) => {
                 <SearchInput
                     name="BrandInput"
                     placeholder="Enter your item brand here..."
+                    value={brand}
+                    setValue={setBrand}
                 />
             </View>
             <View style={{ flexDirection: 'row', marginTop: 20 }}>
@@ -185,5 +194,4 @@ const styles = StyleSheet.create({
     },
 })
 
-// exporting the home screen to be used in the app (so it can be used in other screens)
 export default Clothes;
