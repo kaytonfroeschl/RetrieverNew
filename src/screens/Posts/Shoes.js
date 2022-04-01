@@ -20,6 +20,10 @@ const jacketPage = ({route}) => {
         let category = "Shoes";
         navigation.navigate('Item', {action: action, currUser: currUser, category: category, clotheType: clotheType, color: color, size: size});
     }
+
+     /* FRONT-END!
+        Need variable for the value of brand
+    */
     const [clotheType, setClotheType] = useState(" ");
     const [color, setColor] = useState(" ");
     const [size, setSize] = useState(" ");

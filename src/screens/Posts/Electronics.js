@@ -19,7 +19,11 @@ const Electronics = ({route}) => {
     const [clotheType, setClotheType] = useState(" ");
     const [color, setColor] = useState(" ");
     const [size, setSize] = useState(" ");
-
+    
+    /* FRONT-END!
+        Need variable for the value of brand
+    */
+    
     console.log('Electronic options:')
     console.log('Type: '+ clotheType);
     console.log('Color: '+ color);

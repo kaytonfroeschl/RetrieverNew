@@ -31,6 +31,7 @@ const ItemPage = ({route}) => {
     console.log(color);
     console.log(size);
 
+
    
 
     function getLostOrFound(action){

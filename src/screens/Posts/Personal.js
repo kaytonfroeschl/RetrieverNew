@@ -23,6 +23,14 @@ const Personal = ({route}) => {
     const [color, setColor] = useState(" ");
     const [size, setSize] = useState(" ");
 
+    /*
+    FRONT-END!
+    Need some variables from the users input. 
+    On the App: "Does the item have an ID? (Y/N)"-> need boolean value
+                if Y: 
+                ID_name -> need string value
+                bank_name -> need string value
+    */
     console.log('Personal Items options:')
     console.log('Type: '+ clotheType);
     console.log('Color: '+ color);
