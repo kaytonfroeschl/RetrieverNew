@@ -24,6 +24,7 @@ import Shoes from '../screens/Posts/Shoes';
 import Personal from '../screens/Posts/Personal';
 import Electronics from '../screens/Posts/Electronics';
 import Profiles from '../screens/Profiles';
+import InAppReset from '../screens/InAppReset';
 
 // Charz: this bit of code I had to look up to get the theme to work
 // Charz: essentially just defined the background color of the app to be that signature dark blue color
@@ -56,6 +57,7 @@ const Navigation = () => {
                 <Stack.Screen name="Profile" component={Profiles} options={{title: 'Profile', headerShown:true}} />
                 <Stack.Screen name="Post" options={{ title: 'Post', headerShown: true }} component={Posts} />
                 <Stack.Screen name="Item" options={{ title: 'Item', headerShown: true }} component={Items} />
+                <Stack.Screen name="In App Reset" options={{ title: 'Reset Password', headerShown: true }} component={InAppReset} />
                 <Stack.Screen name="Setting" component={Settings} />
                 <Stack.Screen name="clothe" options={{ title: 'Post for Clothes', headerShown: true }} component={Clothes} />
                 <Stack.Screen name="shoe" options={{ title: 'Post for Shoes', headerShown: true }} component={Shoes} />
