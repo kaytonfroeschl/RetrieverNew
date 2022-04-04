@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { useState} from 'react'
-import {View, Text, Image, StyleSheet, useWindowDimensions, ScrollView, TextInput } from 'react-native'
+import {View, Text, Image, StyleSheet, useWindowDimensions, ScrollView, TextInput, Alert } from 'react-native'
 import Logo from '../../../assets/images/clipart4739493.png'
 import CustomInput from '../../components/CustomInput'
 import CustomButton from '../../components/CustomButton'
@@ -22,18 +22,23 @@ const SignInScreen = () => {
 
     //Charz: Instead of using the useState hook, I am instead implementing useForm to handle the state
     const {control, handleSubmit} = useForm();
-    
-    //const { user, signUp, signIn } = useAuth();
 
     const {height} = useWindowDimensions()
     const navigation = useNavigation()
 
-    function logIn(){
+    function logIn(username, password){
         var user = Parse.User.logIn(username, password).then(function(user){
             console.log('User created successfully with name: ' + user.get("username") + ' and email: ' + user.get("email"));
+            console.log("in?")
             navigation.navigate('Home');
         }).catch(function(error){
             console.log("Error: " + error.code + " " + error.message);
+            Alert.alert('Error', 'Username or password is invalid.', [
+                {
+                  text: 'Cancel',
+                },
+                { text: 'OK'},
+              ]);
             //FRONT END: maybe add an error message saying either username or password was invalid
          });
     }
@@ -139,7 +144,7 @@ const SignInScreen = () => {
         //backend call needed here (@kayton, @celia)
         //if success, navigate to home screen
 
-        //logIn();
+        logIn(data.username, data.password);
     }
 
     // what happens when user presses "Forgot Password"
