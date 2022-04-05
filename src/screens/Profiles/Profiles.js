@@ -48,7 +48,7 @@ const Profiles = () => {
                 <Text style={styles.text}>  Email:</Text>
             </View>
             <View style ={{marginTop: 200}}>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('In App Reset')}>
                 <Text style={styles.text1}>Reset Password</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={Loggingout}>

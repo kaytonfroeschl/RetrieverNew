@@ -17,6 +17,13 @@ import {
 import Logout from '../SignInScreen/SignInScreen';
 import Profiles from '../Profiles';
 
+import Parse from 'parse/react-native.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+Parse.initialize('XwnlQIY0f0GyOzt5DftAZEYLOy9YZmT26ZIktF94', 'L4fRRElgmLuKvanPenznzblgXwqDJGtxIKG0dB8j');
+Parse.serverURL = 'https://parseapi.back4app.com/';
+
+
+
 const Drawer = createDrawerNavigator()
 
 function CustomDrawerContent(props) {
@@ -54,9 +61,18 @@ const HomeScreen = () => {
     }
     const onFoundPressed = async () => {
         console.warn('Show all Found items')
+        //there are no found items yet
     }
     const onLostPressed = async () => {
         console.warn('Show all Lost Items')
+        console.log("Lost Items:")
+        
+       /* //Query the Lost Items
+        let parseQuery = new Parse.Query('Item');
+        parseQuery.equalTo('Action', false);
+        let queryResults = await parseQuery.findAll();
+        //results of all lost items
+        console.log(queryResults);*/
     }
     const onChatPressed = async () => {
         console.warn('Chat pressed')

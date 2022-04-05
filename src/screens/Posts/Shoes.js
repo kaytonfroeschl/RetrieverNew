@@ -9,16 +9,43 @@ import { useNavigation } from '@react-navigation/native'
 import RadioButtonGroup, { RadioButtonItem } from "expo-radio-button";
 import SearchInput from '../../components/SearchInput/SearchInput'
 
-// building the home screen
-const jacketPage = () => {
+//FRONTEND: shouldnt it say shoepage?
+//          Yes you are right, I copy and paste too fast and forget to change the name.
+
+
+/* Yuying: I don't know if we need different value to handle the custom color input,
+               So I comment the code I write about the custom color. 
+               Set them free if you think needed.  
+    */
+const Shoes = ({ route }) => {
+    const { action } = route.params;
+    const { currUser } = route.params;
     const navigation = useNavigation()
     const onPostNowPressed = async () => {
         console.warn('Post pressed')
-        navigation.navigate('Item')
+        let category = "Shoes";
+        navigation.navigate('Item', { action: action, currUser: currUser, category: category, clotheType: clotheType, color: color, size: size });
     }
+
+    /* FRONT-END!
+       Need variable for the value of brand
+   */
+    //Added
     const [clotheType, setClotheType] = useState(" ");
     const [color, setColor] = useState(" ");
+    // const [customColor, setCustomColor] = useState(" ");
     const [size, setSize] = useState(" ");
+    const [brand, setBrand] = useState(" ");
+
+    console.log('Shoe options:')
+    console.log('Shoe Type: ' + clotheType);
+    console.log('Color: ' + color);
+    // console.log("Custom Color" + customColor);
+    console.log('Size: ' + size);
+    console.log('Brand: ' + brand);
+    console.log('Action: ' + action);
+
+
 
     return (
         <ScrollView style={{ backgroundColor: '#E7EAF4' }} >
@@ -38,7 +65,7 @@ const jacketPage = () => {
                     <RadioButtonItem value="flipflop" label={<Text style={{ fontSize: 15, padding: 7, fontWeight: '700' }}>Flip Flops</Text>} />
                 </RadioButtonGroup>
             </View>
-            <View style={{ marginTop: 20 }}>
+            <View style={{ flexDirection: 'row', marginTop: 20 }}>
                 <View style={{ backgroundColor: '#D4D4D6', height: 1, flex: 1, alignSelf: 'center' }} />
             </View>
 
@@ -50,8 +77,8 @@ const jacketPage = () => {
                     onSelected={(value) => setSize(value)}
                     radioBackground="#436cc9"
                 >
-                    <RadioButtonItem value="XS" label={<Text style={{ fontSize: 15, padding: 7, fontWeight: '700' }}>3 or3.5                   </Text>} />
-                    <RadioButtonItem value="S" label={<Text style={{ fontSize: 15, padding: 7, fontWeight: '700' }}> 4 or 4.5             </Text>} />
+                    <RadioButtonItem value="3" label={<Text style={{ fontSize: 15, padding: 7, fontWeight: '700' }}>3 or3.5                   </Text>} />
+                    <RadioButtonItem value="4" label={<Text style={{ fontSize: 15, padding: 7, fontWeight: '700' }}> 4 or 4.5             </Text>} />
 
                 </RadioButtonGroup>
                 <RadioButtonGroup
@@ -60,7 +87,7 @@ const jacketPage = () => {
                     onSelected={(value) => setSize(value)}
                     radioBackground="#436cc9"
                 >
-                    <RadioButtonItem value="M" label={<Text style={{ fontSize: 15, padding: 7, fontWeight: '700' }}>5 or 5.5                   </Text>} />
+                    <RadioButtonItem value="5" label={<Text style={{ fontSize: 15, padding: 7, fontWeight: '700' }}>5 or 5.5                   </Text>} />
                     <RadioButtonItem value="6" label={<Text style={{ fontSize: 15, padding: 7, fontWeight: '700' }}>6 or 6.5            </Text>} />
 
                 </RadioButtonGroup>
@@ -149,6 +176,8 @@ const jacketPage = () => {
                 <SearchInput
                     name="ColorInput"
                     placeholder="Enter custom color"
+                // value={customColor}
+                // setValue={setCustomColor}
                 />
             </View>
             <View style={{ flexDirection: 'row', marginTop: 20 }}>
@@ -158,8 +187,10 @@ const jacketPage = () => {
             <Text style={{ marginLeft: 30, marginTop: 30, fontWeight: 'bold', fontSize: 18 }}>Brands:</Text>
             <View style={[styles.position]}>
                 <SearchInput
-                    name="BrandInput"
-                    placeholder="Enter your item brand here..."
+                    name="brandInput"
+                    placeholder="Enter your brand"
+                    value={brand}
+                    setValue={setBrand}
                 />
             </View>
             <View style={{ flexDirection: 'row', marginTop: 20 }}>
@@ -203,5 +234,4 @@ const styles = StyleSheet.create({
     },
 })
 
-// exporting the home screen to be used in the app (so it can be used in other screens)
-export default jacketPage;
+export default Shoes;

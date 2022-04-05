@@ -10,28 +10,61 @@ import RadioButtonGroup, { RadioButtonItem } from "expo-radio-button";
 import SearchInput from '../../components/SearchInput/SearchInput'
 
 
-const Personal = () => {
+const Personal = ({ route }) => {
+    /* Yuying: I don't know if we need different value to handle the custom color input,
+               So I comment the code I write about the custom color. 
+               Set them free if you think needed.  
+    */
+
+    const { action } = route.params;
+    const { currUser } = route.params;
     const navigation = useNavigation()
     const onPostNowPressed = async () => {
         console.warn('Post pressed')
+        let category = "Personal";
         navigation.navigate('Item')
     }
-    const [clotheType, setClotheType] = useState(" ");
+    const [Type, setType] = useState(" ");
     const [color, setColor] = useState(" ");
-    const [size, setSize] = useState(" ");
+    const [theboolean, setboolean] = useState(" ");
+    const [customType, setcustomType] = useState(" ");
+    // const [customColor, setCustomColor] = useState("");
+    const [ID_name, setID_name] = useState("");
+    const [bank_name, setBank_name] = useState("");
+
+
+    /*
+    FRONT-END!
+    Need some variables from the users input. 
+    On the App: "Does the item have an ID? (Y/N)"-> need boolean value
+                if Y: 
+                ID_name -> need string value
+                bank_name -> need string value
+    */
+    console.log('Personal Items options:')
+    console.log('Type: ' + Type);
+    console.log('Custom Type' + customType);
+    console.log('Color: ' + color);
+    // console.log('Custom Color: ' + customColor);
+    console.log('Boolean: ' + theboolean);
+    console.log('Action: ' + action);
+    console.log('Bank Name: ' + bank_name);
+    console.log('ID Name ' + ID_name);
+
+
 
     return (
         <ScrollView style={{ backgroundColor: '#E7EAF4' }} >
-            <Text style={{ marginLeft: 30, marginTop: 30, fontWeight: 'bold', fontSize: 18 }}>Clothes Type:</Text>
+            <Text style={{ marginLeft: 30, marginTop: 30, fontWeight: 'bold', fontSize: 18 }}>Item Type:</Text>
             <View>
                 <RadioButtonGroup
                     containerStyle={{ marginTop: 10, marginLeft: 35 }}
-                    selected={clotheType}
-                    onSelected={(value) => setClotheType(value)}
+                    selected={Type}
+                    onSelected={(value) => setType(value)}
                     radioBackground="#436cc9"
                 >
                     <RadioButtonItem value="wallet" label={<Text style={{ fontSize: 15, padding: 7, fontWeight: '700' }}>Wallet</Text>} />
-                    <RadioButtonItem value="keys" label={<Text style={{ fontSize: 15, padding: 7, fontWeight: '700' }}>keys</Text>} />
+                    <RadioButtonItem value="keys" label={<Text style={{ fontSize: 15, padding: 7, fontWeight: '700' }}>Keys</Text>} />
                     <RadioButtonItem value="id" label={<Text style={{ fontSize: 15, padding: 7, fontWeight: '700' }}>ID</Text>} />
                     <RadioButtonItem value="cards" label={<Text style={{ fontSize: 15, padding: 7, fontWeight: '700' }}>Cards</Text>} />
                     <RadioButtonItem value="other" label={<Text style={{ fontSize: 15, padding: 7, fontWeight: '700' }}>Other</Text>} />
@@ -41,6 +74,8 @@ const Personal = () => {
                 <SearchInput
                     name="typeInput"
                     placeholder="What is this Item?"
+                    value={customType}
+                    setValue={setcustomType}
                 />
             </View>
             <View style={{ flexDirection: 'row', marginTop: 20 }}>
@@ -51,19 +86,30 @@ const Personal = () => {
             <View>
                 <RadioButtonGroup
                     containerStyle={{ marginTop: 10, marginLeft: 35, marginBottom: 5 }}
-                    selected={size}
-                    onSelected={(value) => setSize(value)}
+                    selected={theboolean}
+                    onSelected={(value) => setboolean(value)}
                     radioBackground="#436cc9"
                 >
-                    <RadioButtonItem value="no" label={<Text style={{ fontSize: 15, padding: 7, fontWeight: '700' }}> No/Don't want to provide</Text>} />
-                    <RadioButtonItem value="samsung" label={<Text style={{ fontSize: 15, padding: 7, fontWeight: '700' }}>Yes           </Text>} />
+                    <RadioButtonItem value="false" label={<Text style={{ fontSize: 15, padding: 7, fontWeight: '700' }}> No/Don't want to provide</Text>} />
+                    <RadioButtonItem value="true" label={<Text style={{ fontSize: 15, padding: 7, fontWeight: '700' }}>Yes           </Text>} />
                 </RadioButtonGroup>
             </View>
             <View style={[styles.position]}>
-                <Text style={{ marginTop: 10, fontSize: 16 }}>Name/Bank Name:</Text>
+                <Text style={{ marginTop: 10, fontSize: 16 }}>ID Name:</Text>
                 <SearchInput
-                    name="infoInput"
-                    placeholder="Enter name..."
+                    name="ID_nameInput"
+                    placeholder="Enter the ID name..."
+                    value={ID_name}
+                    setValue={setID_name}
+                />
+            </View>
+            <View style={[styles.position]}>
+                <Text style={{ marginTop: 10, fontSize: 16 }}>Bank Name:</Text>
+                <SearchInput
+                    name="bank_nameInput"
+                    placeholder="Enter the Bank name..."
+                    value={bank_name}
+                    setValue={setBank_name}
                 />
             </View>
             <View style={{ flexDirection: 'row', marginTop: 20 }}>
@@ -79,7 +125,7 @@ const Personal = () => {
                     radioBackground="#436cc9"
                 >
                     <RadioButtonItem value="black" label={<Text style={{ fontSize: 15, padding: 10, fontWeight: '700' }}>Black     </Text>} />
-                    <RadioButtonItem value="brown" label={<Text style={{ fontSize: 15, padding: 10, fontWeight: '700' }}>Blue    </Text>} />
+                    <RadioButtonItem value="blue" label={<Text style={{ fontSize: 15, padding: 10, fontWeight: '700' }}>Blue    </Text>} />
                     <RadioButtonItem value="gray" label={<Text style={{ fontSize: 15, padding: 10, fontWeight: '700' }}>Gray    </Text>} />
                 </RadioButtonGroup>
                 <RadioButtonGroup
@@ -88,8 +134,8 @@ const Personal = () => {
                     onSelected={(value) => setColor(value)}
                     radioBackground="#436cc9"
                 >
-                    <RadioButtonItem value="red" label={<Text style={{ fontSize: 15, padding: 10, fontWeight: '700' }}>Green     </Text>} />
-                    <RadioButtonItem value="blue" label={<Text style={{ fontSize: 15, padding: 10, fontWeight: '700' }}>Red        </Text>} />
+                    <RadioButtonItem value="green" label={<Text style={{ fontSize: 15, padding: 10, fontWeight: '700' }}>Green     </Text>} />
+                    <RadioButtonItem value="red" label={<Text style={{ fontSize: 15, padding: 10, fontWeight: '700' }}>Red        </Text>} />
                     <RadioButtonItem value="silver" label={<Text style={{ fontSize: 15, padding: 10, fontWeight: '700' }}>Silver</Text>} />
                 </RadioButtonGroup>
                 <RadioButtonGroup
@@ -105,6 +151,8 @@ const Personal = () => {
                 <SearchInput
                     name="ColorInput"
                     placeholder="Enter custom color"
+                // value={customColor}
+                // setValue={setCustomColor}
                 />
             </View>
             <View style={{ flexDirection: 'row', marginTop: 20 }}>

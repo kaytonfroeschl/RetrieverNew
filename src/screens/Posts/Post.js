@@ -6,31 +6,59 @@ import { Component } from "react";
 import { useNavigation } from '@react-navigation/native'
 import SearchInput from '../../components/SearchInput/SearchInput'
 //import { useAuth } from '../../../providers/AuthProvider';
-import Parse from 'parse/react-native.js';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
 import Logo from '../../../assets/images/clipart4739493.png'
 
+import Parse from 'parse/react-native.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 Parse.initialize('XwnlQIY0f0GyOzt5DftAZEYLOy9YZmT26ZIktF94', 'L4fRRElgmLuKvanPenznzblgXwqDJGtxIKG0dB8j');
 Parse.serverURL = 'https://parseapi.back4app.com/';
 
 const Posts = () => {
+
+  const [current, setCurrent] = useState("test"); //current = "Lost" or "Found" string 
+  const [selectedValue, setSelectedValue] = useState('');
+  const [detailValue, onChangeText] = React.useState('');
+  const [title, setTitle] = useState('');
+  const [location, setLocation] = useState('');
+  //spits out the value or lost or found based off user input
+  //console.log('Lost or Found: ')
+  console.log(current);
+  console.log("Title: " + title);
+  console.log("Location: " + location);
+  console.log("Details: " + detailValue);
+  const [currUserID, setCurrUserID] = useState('');
+
+  async function getCurrentUser() {
+    // This condition ensures that username is updated only if needed
+    if (currUserID === '') {
+      const currentUser = await Parse.User.currentAsync();
+      if (currentUser !== null) {
+        setCurrUserID(currentUser.id);
+      }
+    }
+  }
+  getCurrentUser();
+  console.log("Current User ID (FkH3HV4mtp): " + currUserID);
+
+
   const navigation = useNavigation()
+
   const onClothePressed = async () => {
     console.warn('go to clothes options')
-    navigation.navigate('clothe')
+    navigation.navigate('clothe', { action: current, currUser: currUserID });
   }
   const onShoesPressed = async () => {
     console.warn('go to shoes options')
-    navigation.navigate('shoe')
+    navigation.navigate('shoe', { action: current, currUser: currUserID });
   }
   const onPersonalPressed = async () => {
     console.warn('go to personal item options')
-    navigation.navigate('personal')
+    navigation.navigate('personal', { action: current, currUser: currUserID });
   }
   const onElectronicsPressed = async () => {
     console.warn('go to electronics options')
-    navigation.navigate('electronics')
+    navigation.navigate('electronics', { action: current });
   }
 
   const [image, setImage] = useState(null);
@@ -49,9 +77,7 @@ const Posts = () => {
     }
   };
 
-  const [current, setCurrent] = useState("test");
-  const [selectedValue, setSelectedValue] = useState('');
-  const [value, onChangeText] = React.useState('');
+
 
   return (
     <ScrollView style={{ backgroundColor: '#E7EAF4' }}>
@@ -72,7 +98,9 @@ const Posts = () => {
       <Text style={{ marginLeft: 30, marginTop: 20, fontWeight: 'bold', fontSize: 20 }}>Post Title:</Text>
       <View style={[styles.position]}>
         <SearchInput
-          placeholder="Enter Post Title..."
+          placeholder="Enter Post Title ..."
+          value={title}
+          setValue={setTitle}
         />
       </View>
 
@@ -80,6 +108,8 @@ const Posts = () => {
       <View style={[styles.position]}>
         <SearchInput
           placeholder="Enter Your Location..."
+          value={location}
+          setValue={setLocation}
         />
       </View>
 
@@ -99,7 +129,7 @@ const Posts = () => {
         textAlignVertical="top"
         fontSize={17}
         returnKeyType="done"
-        value={value}
+        value={detailValue}
       />
 
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
@@ -202,5 +232,4 @@ const styles = StyleSheet.create({
 
 })
 
-// exporting the home screen to be used in the app (so it can be used in other screens)
 export default Posts;

@@ -9,15 +9,36 @@ import { useNavigation } from '@react-navigation/native'
 import RadioButtonGroup, { RadioButtonItem } from "expo-radio-button";
 import SearchInput from '../../components/SearchInput/SearchInput'
 
-const Electronics = () => {
+const Electronics = ({ route }) => {
+
+    /* Yuying: I don't know if we need different value to handle the custom color input,
+               So I comment the code I write about the custom color. 
+               Set them free if you think needed.  
+    */
+
+    const { action } = route.params;
     const navigation = useNavigation()
     const onPostNowPressed = async () => {
         console.warn('Post pressed')
         navigation.navigate('Item')
     }
-    const [clotheType, setClotheType] = useState(" ");
+    const [Type, setType] = useState(" ");
     const [color, setColor] = useState(" ");
-    const [size, setSize] = useState(" ");
+    const [brand, setBrand] = useState(" ");
+    const [Custombrand, setCustomBrand] = useState(" ");
+    // const [customColor, setCustomColor] = useState("");
+
+    /* FRONT-END!
+        Need variable for the value of brand
+    */
+    //Added
+    console.log('Electronic options:')
+    console.log('Type: ' + Type);
+    console.log('Color: ' + color);
+    //console.log('Custom Color: ' + customColor);
+    console.log('Brand: ' + brand);
+    console.log('Custom Brand' + Custombrand);
+    console.log('Action: ' + action);
 
     return (
         <ScrollView style={{ backgroundColor: '#E7EAF4' }} >
@@ -25,8 +46,8 @@ const Electronics = () => {
             <View>
                 <RadioButtonGroup
                     containerStyle={{ marginTop: 10, marginLeft: 35 }}
-                    selected={clotheType}
-                    onSelected={(value) => setClotheType(value)}
+                    selected={Type}
+                    onSelected={(value) => setType(value)}
                     radioBackground="#436cc9"
                 >
                     <RadioButtonItem value="phone" label={<Text style={{ fontSize: 15, padding: 7, fontWeight: '700' }}>Phone</Text>} />
@@ -43,8 +64,8 @@ const Electronics = () => {
             <View>
                 <RadioButtonGroup
                     containerStyle={{ marginLeft: 35 }}
-                    selected={size}
-                    onSelected={(value) => setSize(value)}
+                    selected={brand}
+                    onSelected={(value) => setBrand(value)}
                     radioBackground="#436cc9"
                 >
                     <RadioButtonItem value="apple" label={<Text style={{ fontSize: 15, padding: 7, fontWeight: '700' }}> Apple         </Text>} />
@@ -62,8 +83,8 @@ const Electronics = () => {
             <View>
                 <RadioButtonGroup
                     containerStyle={{ flexDirection: "row", marginLeft: 35 }}
-                    selected={color}
-                    onSelected={(value) => setColor(value)}
+                    selected={brand}
+                    onSelected={(value) => setBrand(value)}
                     radioBackground="#436cc9"
                 >
                     <RadioButtonItem value="other" label={<Text style={{ fontSize: 15, padding: 10, fontWeight: '700' }}>Other Brands:    </Text>} />
@@ -73,6 +94,8 @@ const Electronics = () => {
                 <SearchInput
                     name="BrandInput"
                     placeholder="Enter brands"
+                    value={Custombrand}
+                    setValue={setCustomBrand}
                 />
             </View>
             <View style={{ flexDirection: 'row', marginTop: 20 }}>
@@ -114,6 +137,8 @@ const Electronics = () => {
                 <SearchInput
                     name="ColorInput"
                     placeholder="Enter custom color"
+                // value={customColor}
+                // setValue={setCustomColor}
                 />
             </View>
             <View style={{ flexDirection: 'row', marginTop: 20 }}>
