@@ -1,6 +1,6 @@
 // this is a temporary home screen lol 
-import React from "react";
-import { View, Text, StyleSheet, ScrollView, Image, RefreshControl, SafeAreaView, TouchableOpacity } from "react-native";
+import React, {useState} from "react";
+import { Alert, View, Text, StyleSheet, ScrollView, Image, RefreshControl, SafeAreaView, TouchableOpacity } from "react-native";
 import Logo from '../../../assets/images/clipart4739493.png'
 import { TextInput } from "react-native-web";
 import { Component } from "react/cjs/react.production.min";
@@ -14,6 +14,7 @@ import {
     DrawerContentScrollView,
     DrawerItemList,
 } from '@react-navigation/drawer';
+import { List, Title, Button as PaperButton, Text as PaperText } from 'react-native-paper';
 import Logout from '../SignInScreen/SignInScreen';
 import Profiles from '../Profiles';
 
@@ -59,21 +60,19 @@ const HomeScreen = () => {
         console.warn('Search pressed')
         navigation.navigate('Search Result')
     }
-    const onFoundPressed = async () => {
-        console.warn('Show all Found items')
-        //there are no found items yet
-    }
-    const onLostPressed = async () => {
-        console.warn('Show all Lost Items')
-        console.log("Lost Items:")
-        
-       /* //Query the Lost Items
-        let parseQuery = new Parse.Query('Item');
-        parseQuery.equalTo('Action', false);
-        let queryResults = await parseQuery.findAll();
-        //results of all lost items
-        console.log(queryResults);*/
-    }
+
+        /*const clearQueryResults = async function () {
+            setQueryResults(null);
+            return true;
+        };*/
+
+        /* //OLD Query the Lost Items
+         let parseQuery = new Parse.Query('Item');
+         parseQuery.equalTo('Action', false);
+         let queryResults = await parseQuery.findAll();
+         //results of all lost items
+         console.log(queryResults);*/
+
     const onChatPressed = async () => {
         console.warn('Chat pressed')
         navigation.navigate('Chat Page')
@@ -96,6 +95,59 @@ const HomeScreen = () => {
             setRefreshing(true);
             wait(1000).then(() => setRefreshing(false));
         }, []);
+
+        //state variable
+        const [queryResults, setQueryResults] = useState(null);
+
+        const onFoundPressed = async function () {
+            console.warn('Show all Found items');
+            console.log("Found Items:");
+
+            // This will create your query
+            const parseQuery = new Parse.Query('Found');
+            parseQuery.descending('createdAt');
+   
+           try {
+               console.log('entered try block');
+              let foundItems = await parseQuery.find();
+              setQueryResults(foundItems);
+              for (let result of foundItems) {
+                   // You access `Parse.Objects` attributes by using `.get`
+                   console.log(`name: ${result.get('itemID')}, type: ${result.get('Type')}`);
+               };
+               return true;
+           } catch (error) {
+               // Error can be caused by lack of Internet connection
+               Alert.alert('Error!', error.message);
+               return false;
+           }
+        };
+        
+        const onLostPressed = async function () {
+            console.warn('Show all Lost Items');
+            console.log("Lost Items:");
+    
+            // This will create your query
+             const parseQuery = new Parse.Query('Lost');
+             parseQuery.descending('createdAt');
+    
+            try {
+                console.log('entered try block');
+               let lostItems = await parseQuery.find();
+               setQueryResults(lostItems);
+               for (let result of lostItems) {
+                    // You access `Parse.Objects` attributes by using `.get`
+                    console.log(`name: ${result.get('itemID')}, type: ${result.get('Type')}`);
+                };
+                return true;
+            } catch (error) {
+                // Error can be caused by lack of Internet connection
+                Alert.alert('Error!', error.message);
+                return false;
+            }
+        };
+
+
         return (
             <View style={{ flex: 1 }}>
                 <View style={[styles.flex, styles.topStatus]}>
@@ -125,39 +177,36 @@ const HomeScreen = () => {
                             text="LOST"
                             type="SECONDARY"
                             backgroundColor='#436cc9'
-                            onPress={onLostPressed}
+                            onPress={() => onLostPressed()}
                         />
                     </View >
                 </View>
                 <ScrollView contentContainerStyle={styles.scrollView}
                     refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                     <View style={styles.root}>
-                        <Image
-                            source={Logo}
-                            style={styles.logo}
-                            resizeMode="contain"
-                        />
-                        <Text style={{ fontSize: 24, alignSelf: 'center' }}>Temp Post 1</Text>
-                        <Image
-                            source={Logo}
-                            style={styles.logo}
-                            resizeMode="contain"
-                        />
-                        <Text style={{ fontSize: 24, alignSelf: 'center' }}>Temp Post 2</Text>
-                        <Image
-                            source={Logo}
-                            style={styles.logo}
-                            resizeMode="contain"
-                        />
-                        <Text style={{ fontSize: 24, alignSelf: 'center' }}>Temp Post 3</Text>
-                        <Image
-                            source={Logo}
-                            style={styles.logo}
-                            resizeMode="contain"
-                        />
-                        <Text style={{ fontSize: 24, alignSelf: 'center' }}>Temp Post 4</Text>
+                        <Title>{'Result List'}</Title>
+                        {/* Results List */}
+                        {queryResults !== null &&
+                            queryResults !== undefined &&
+                            queryResults.map((lost) => (
+                                <List.Item
+                                    key={lost.id}
+                                    title={lost.get('Type')}
+                                    description={`Location Lost: ${lost.get(
+                                        'LocationLost',
+                                    )}, itemId: ${lost.get('itemID')}`}
+                                    titleStyle={{fontSize: 20}}
+                                    style={{width: '90%', borderBottomWidth: 1, fontSize: 15, borderBottomColor: 'rgba(0, 0, 0, 0.12)'}}
+                                 />
+                                ))}
+                            {queryResults === null ||
+                             queryResults === undefined ||
+                            (queryResults !== null &&
+                                queryResults !== undefined &&
+                                queryResults.length <= 0) ? (
+                                <Text>{'No results here!'}</Text>
+                              ) : null}
                     </View>
-
                 </ScrollView>
                 <View style={{ flexDirection: "row", justifyContent: 'center' }}>
                     <View style={[styles.btn01]}>
@@ -266,7 +315,6 @@ const styles = StyleSheet.create({
         borderRadius: 100 / 2,
         alignSelf: 'center',
         },
-
 })
 
 // exporting the home screen to be used in the app (so it can be used in other screens)
