@@ -77,10 +77,6 @@ const HomeScreen = () => {
         console.warn('Chat pressed')
         navigation.navigate('Chat Page')
     }
-    const onFeedPressed = async () => {
-        console.warn('Refresh the feed page')
-        navigation.navigate('Home')
-    }
     const onPostPressed = async () => {
         console.warn('Post pressed')
         navigation.navigate('Post')
@@ -98,6 +94,32 @@ const HomeScreen = () => {
 
         //state variable
         const [queryResults, setQueryResults] = useState(null);
+
+
+        //START HERE. Feed may need a different page than lost and found do.
+        const onFeedPressed = async function () {
+            console.warn('Refresh the feed page')
+            console.log("Showing all items in Item Database:");
+
+            // This will create your query
+            const parseQuery = new Parse.Query('Item');
+            parseQuery.descending('createdAt');
+   
+           try {
+               console.log('entered try block');
+              let allItems = await parseQuery.find();
+              setQueryResults(allItems);
+              for (let result of allItems) {
+                   // You access `Parse.Objects` attributes by using `.get`
+                   console.log(`object id: ${result.get('objectId')}, type: ${result.get('Action')}`);
+               };
+               return true;
+           } catch (error) {
+               // Error can be caused by lack of Internet connection
+               Alert.alert('Error!', error.message);
+               return false;
+           }
+        };
 
         const onFoundPressed = async function () {
             console.warn('Show all Found items');
@@ -191,10 +213,10 @@ const HomeScreen = () => {
                             queryResults.map((lost) => (
                                 <List.Item
                                     key={lost.id}
-                                    title={lost.get('Type')}
-                                    description={`Location Lost: ${lost.get(
-                                        'LocationLost',
-                                    )}, itemId: ${lost.get('itemID')}`}
+                                    title={lost.get('Name')}
+                                    description={`Location: ${lost.get(
+                                        'Location',
+                                    )}`}
                                     titleStyle={{fontSize: 20}}
                                     style={{width: '90%', borderBottomWidth: 1, fontSize: 15, borderBottomColor: 'rgba(0, 0, 0, 0.12)'}}
                                  />

@@ -27,19 +27,53 @@ const SignUpScreen = () => {
 
 
     async function signUp(usernameF, emailF, passwordF) {
-        var user = new Parse.User();
+        //var user = new Parse.User();
         //var result = password.localeCompare(confirmPassword);
-        user.set("username", usernameF);
-        user.set("email", emailF);
-        user.set("password", passwordF);
-        user.signUp().then(function (user) {
-            console.log('User created successful with name: ' + user.get("username") + ' and email: ' + user.get("email"));
-            navigation.navigate('Home')
-        }).catch(function (error) {
-            console.log("Error: " + error.code + " " + error.message);
-            navigation.navigate('Sign In')
-        });
+        /*var usernameExists = doUserQuery(usernameF);
+        if(usernameExists) {
+            console.log('Username already exists');
+        }*/
+        //else {
+            user.set("username", usernameF);
+            user.set("email", emailF);
+            user.set("password", passwordF);
+            user.signUp().then(function (user) {
+                console.log('User created successful with name: ' + user.get("username") + ' and email: ' + user.get("email"));
+                navigation.navigate('Home')
+            }).catch(function (error) {
+                console.log("Error: " + error.code + " " + error.message);
+                navigation.navigate('Sign In')
+            });
+        //}
     }
+
+    /*const doUserQuery = async function (queryValue) {
+        // This will create your user query
+        const parseQuery = new Parse.Query(Parse.User);
+        // Several query functions can be set to your Parse,Query, they will
+        // only resolve when calling "find", for example
+        parseQuery.equalTo('username', queryValue);
+        // Only after calling "find" all query conditions will resolve
+        return await parseQuery
+          .find()
+          .then(async function (queriedUsers) {
+            // Set the query results to an state variable to retrieve it on your JSX
+            // Be aware that empty or invalid queries return as an empty array
+            setQueryResults(queriedUsers);
+            if (queriedUsers == []) {
+                return false;
+            } else {
+                return true;
+            }
+          })
+          .catch(function (error) {
+            // Error can be caused by lack of Internet connection, but in most
+            // cases "find" will return as an empty array on "then"
+            console.log("Error: " + error.code + " " + error.message);
+            setQueryResults([]);
+            return false;
+          });
+      }*/
 
 
 
