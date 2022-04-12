@@ -136,6 +136,7 @@ const HomeScreen = () => {
               for (let result of foundItems) {
                    // You access `Parse.Objects` attributes by using `.get`
                    console.log(`name: ${result.get('itemID')}, type: ${result.get('Type')}`);
+                  
                };
                return true;
            } catch (error) {
@@ -218,7 +219,7 @@ const HomeScreen = () => {
                                         'Location',
                                     )}`}
                                     titleStyle={{fontSize: 20}}
-                                    style={{width: '90%', borderBottomWidth: 1, fontSize: 15, borderBottomColor: 'rgba(0, 0, 0, 0.12)'}}
+                                    style={{height:250, width: '90%', borderBottomWidth: 1, fontSize: 15, borderBottomColor: 'rgba(0, 0, 0, 0.12)'}}
                                  />
                                 ))}
                             {queryResults === null ||
